@@ -1,0 +1,108 @@
+{
+  "theme_name": "Theme Default",
+  "theme_author": "Dooca Commerce",
+  "theme_version": "1.0.0",
+  "theme_documentation_url": "",
+  "theme_support_url": "",
+  "settings": [
+    {
+      "type": "text",
+      "tab": "Conteudo",
+      "group": "Informações de contato",
+      "id": "contactEmail",
+      "label": "E-mail de contato",
+      "info": "e-mail será exibido nos componentes de contato",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "tab": "Conteudo",
+      "group": "Informações de contato",
+      "id": "contactPhone",
+      "label": "Telefone de contato",
+      "info": "telefone será exibido nos componentes de contato",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "tab": "Conteudo",
+      "group": "Informações de contato",
+      "id": "contactSchedule",
+      "label": "Horário de atendimento",
+      "info": "Horário será exibido nos componentes de contato",
+      "default": ""
+    },
+    {
+      "type": "url",
+      "tab": "Conteudo",
+      "group": "Informações de contato",
+      "id": "facebookLink",
+      "label": "Link do facebook",
+      "info": "",
+      "default": ""
+    },
+    {
+      "type": "url",
+      "tab": "Conteudo",
+      "group": "Informações de contato",
+      "id": "instagramLink",
+      "label": "Link do instagram",
+      "info": "",
+      "default": ""
+    },
+    {
+      "type": "url",
+      "tab": "Conteudo",
+      "group": "Informações de contato",
+      "id": "twitterLink",
+      "label": "Link do twitter",
+      "info": "",
+      "default": ""
+    },
+    {
+      "type": "color_picker",
+      "tab": "Aparência",
+      "group": "Cores",
+      "id": "colorPrimary",
+      "label": "Cor principal",
+      "info": "",
+      "default": "#000000"
+    },
+    {
+      "type": "color_picker",
+      "tab": "Aparência",
+      "group": "Cores",
+      "id": "colorSecondary",
+      "label": "Cor secondaria",
+      "info": "",
+      "default": "#75adc1"
+    },
+    {
+      "type": "color_picker",
+      "tab": "Aparência",
+      "group": "Botões",
+      "id": "buttonColor",
+      "label": "Cor do texto do botão",
+      "info": "",
+      "default": "#000"
+    },
+    {
+      "type": "color_picker",
+      "tab": "Aparência",
+      "group": "Botões",
+      "id": "buttonBackground",
+      "label": "Cor do fundo do botão",
+      "info": "",
+      "default": "#75adc1"
+    },
+    {
+      "type": "font_picker",
+      "tab": "Aparência",
+      "group": "Botões",
+      "id": "fontFamilyBase",
+      "label": "Fonte principal",
+      "info": "",
+      "default": ""
+    }
+  ]
+}
