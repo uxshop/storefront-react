@@ -1,0 +1,21 @@
+{
+  "name": "HTML",
+  "type": "content",
+  "category": "Multimídia",
+  "settings": [
+    {
+      "type": "textarea",
+      "group": "Conteúdo",
+      "id": "htmlContent",
+      "tab": "Conteúdo",
+      "label": "HTML"
+    },
+    {
+      "type": "text",
+      "group": "Conteúdo",
+      "id": "customClass",
+      "label": "Classe CSS",
+      "tab": "Conteúdo"
+    }
+  ]
+}
