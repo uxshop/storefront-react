@@ -1,18 +1,18 @@
-import { Product } from '../../../core/types/product/ProductTypes'
+import { Product } from '@uxshop/storefront-core/dist/types/product/ProductTypes'
 
 export interface ProductListMicroDataProps {
-  data: Product[]
+    data: Product[]
 }
 
 export interface ProductItemMicroDataProps {
-  data: Product
+    data: Product
 }
 
 export interface SomeProductsMicroDataProps {
-  data: SomeProductsProps
+    data: SomeProductsProps
 }
 
 export interface SomeProductsProps {
-  name?: string
-  description?: string
+    name?: string
+    description?: string
 }

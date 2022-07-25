@@ -1,56 +1,57 @@
 {
-  "name": "storefront-react",
-  "version": "0.0.1",
-  "main": "./lib/index.js",
-  "source": "./lib",
-  "types": "./lib/index.d.ts",
-  "scripts": {
-    "dev": "tsc --watch --sourcemap",
-    "test": "npx jest",
-    "test:dev": "npx jest --watch",
-    "build": "tsc",
-    "install": "tsc"
-  },
-  "dependencies": {
-    "@types/node": "^17.0.31",
-    "@types/react": "^18.0.9",
-    "@types/react-dom": "^18.0.3",
-    "@urql/core": "^2.3.3",
-    "graphql": "^15.6.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-helmet": "^6.1.0",
-    "react-router": "^6.0.2",
-    "react-router-dom": "^6.0.2",
-    "socket.io-client": "^4.2.0",
-    "typescript": "^4.4.4",
-    "webfontloader": "^1.6.28",
-    "storefront-core": "github:uxshop/storefront-react"
-  },
-  "devDependencies": {
-    "@types/jest": "^27.0.3",
-    "@types/webfontloader": "^1.6.33",
-    "isomorphic-fetch": "^3.0.0",
-    "jest": "^27.4.2",
-    "ts-jest": "^27.0.7",
-    "vite": "^2.9.1"
-  },
-  "peerDependencies": {
-    "@types/react": "^18.0.9",
-    "@types/react-dom": "^18.0.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "typescript": "^4.4.4",
-    "vite": "^2.9.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/uxshop/storefront-react.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/uxshop/storefront-react/issues"
-  },
-  "homepage": "https://github.com/uxshop/storefront-react#readme"
+    "name": "@uxshop/storefront-react",
+    "version": "0.0.1",
+    "main": "./lib/index.js",
+    "source": "./lib",
+    "types": "./lib/index.d.ts",
+    "scripts": {
+        "dev": "tsc --watch --sourcemap",
+        "test": "npx jest",
+        "test:dev": "npx jest --watch",
+        "build": "tsc",
+        "install": "tsc"
+    },
+    "dependencies": {
+        "@types/node": "^17.0.31",
+        "@types/react": "^18.0.9",
+        "@types/react-dom": "^18.0.3",
+        "@urql/core": "^2.3.3",
+        "@uxshop/storefront-core": "https://github.com/uxshop/storefront-core",
+        "graphql": "^15.6.1",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-helmet": "^6.1.0",
+        "react-router": "^6.0.2",
+        "react-router-dom": "^6.0.2",
+        "socket.io-client": "^4.2.0",
+        "typescript": "^4.4.4",
+        "webfontloader": "^1.6.28"
+    },
+    "devDependencies": {
+        "@types/jest": "^27.0.3",
+        "@types/react-helmet": "^6.1.5",
+        "@types/webfontloader": "^1.6.33",
+        "isomorphic-fetch": "^3.0.0",
+        "jest": "^27.4.2",
+        "ts-jest": "^27.0.7",
+        "vite": "^2.9.1"
+    },
+    "peerDependencies": {
+        "@types/react": "^18.0.9",
+        "@types/react-dom": "^18.0.3",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "typescript": "^4.4.4",
+        "vite": "^2.9.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/uxshop/storefront-react.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/uxshop/storefront-react/issues"
+    },
+    "homepage": "https://github.com/uxshop/storefront-react#readme"
 }

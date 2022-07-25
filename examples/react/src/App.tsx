@@ -1,57 +1,39 @@
+import { useSettings } from '@uxshop/storefront-react/lib/hooks/use-settings'
+import { useSections } from '@uxshop/storefront-react/lib/hooks/use-sections'
+import { useUser } from '@uxshop/storefront-react/lib/hooks/use-user'
+import { Sections } from '@uxshop/storefront-react/lib/components/sections'
 import { useEffect } from 'react'
-import { useSettings, Sections, useSections, useUser } from 'lw-storefront/lib/react'
 import Html from './components/html'
 
 const components = {
-  html: Html
+    html: Html
 }
 
-import { services } from 'lw-storefront/lib/core'
-
-const {
-  apps,
-  blogCategory,
-  blogPost,
-  brand,
-  cart,
-  category,
-  landingPages,
-  menu,
-  pages,
-  scripts,
-  sections,
-  settings,
-  showcase,
-  user
-} = services
-
 const get = async (id: string) => {
-  const result = await settings.getOne()
-  console.log(`result ${id}`, result)
+    console.log(`result ${id}`, '')
 }
 
 function Header() {
-  useEffect(() => {
-    const get = async (id: string) => {
-      const result = await scripts.getListByLocation('header')
-      console.log(result)
-    }
-    get('header')
-  }, [])
-  return <h1>Hello </h1>
+    useEffect(() => {
+        const get = async (id: string) => {
+            console.log('')
+        }
+        get('header')
+    }, [])
+    return <h1>Hello </h1>
 }
 
 function App() {
-  const setting = useSettings()
-  const sections = useSections()
-  const user = useUser({ email: 'diovani@dooca.com.br', password: 'Teste123' })
+    const setting = useSettings()
+    const sections = useSections()
+    const user = useUser({ email: 'diovani@dooca.com.br', password: 'Teste123' })
 
-  return (
-    <div className="App">
-      <h1>Teste {user && user.data.email}</h1>
-      <Sections components={components} />
-    </div>
-  )
+    return (
+        <div className="App">
+            <h1>Teste {user && user.data.email}</h1>
+            <Sections components={components} />
+        </div>
+    )
 }
 
 export default App

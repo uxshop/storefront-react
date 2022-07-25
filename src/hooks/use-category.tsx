@@ -1,27 +1,27 @@
+import { CategoryService } from '@uxshop/storefront-core/dist/modules/category/CategoryService'
+import { CategoryFields } from '@uxshop/storefront-core/dist/modules/category/CategoryTypes'
 import { useEffect, useState } from 'react'
-import { CategoryFields } from '../../core/modules/category/CategoryTypes'
-import { services } from '../../core'
 
 interface CategoryHookParams {
-  id?: string
-  slug?: string
+    id?: string
+    slug?: string
 }
 
 export function useCategory({ id, slug }: CategoryHookParams, fields?: Array<CategoryFields>): any {
-  const [category, setCategory] = useState<any>()
+    const [category, setCategory] = useState<any>()
 
-  async function getOne({ id, slug }: CategoryHookParams, fields?: Array<CategoryFields>) {
-    const service = id ? services.category.getById : services.category.getBySlug
-    const param = id ?? slug
+    async function getOne({ id, slug }: CategoryHookParams, fields?: Array<CategoryFields>) {
+        const service = id ? CategoryService.getById : CategoryService.getBySlug
+        const param = id ?? slug
 
-    const result = await service(param, fields)
+        const result = await service(param, fields)
 
-    setCategory(result)
-  }
+        setCategory(result)
+    }
 
-  useEffect(() => {
-    getOne({ id, slug }, fields)
-  }, [])
+    useEffect(() => {
+        getOne({ id, slug }, fields)
+    }, [])
 
-  return category
+    return category
 }

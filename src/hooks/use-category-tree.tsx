@@ -1,27 +1,33 @@
+import { CategoryService } from '@uxshop/storefront-core/dist/modules/category/CategoryService'
+import { CategoryTreeFields } from '@uxshop/storefront-core/dist/modules/category/CategoryTypes'
 import { useEffect, useState } from 'react'
-import { CategoryTreeFields } from '../../core/modules/category/CategoryTypes'
-import { services } from '../../core'
 
 interface CategoryTreeHookParams {
-  id?: string
-  slug?: string
+    id?: string
+    slug?: string
 }
 
-export function useCategoryTree({ id, slug }: CategoryTreeHookParams, fields?: Array<CategoryTreeFields>): any {
-  const [categoryTree, setCategoryTree] = useState<any>()
+export function useCategoryTree(
+    { id, slug }: CategoryTreeHookParams,
+    fields?: Array<CategoryTreeFields>
+): any {
+    const [categoryTree, setCategoryTree] = useState<any>()
 
-  async function getOne({ id, slug }: CategoryTreeHookParams, fields?: Array<CategoryTreeFields>) {
-    const service = id ? services.category.getTreeById : services.category.getTreeBySlug
-    const param = id ?? slug
+    async function getOne(
+        { id, slug }: CategoryTreeHookParams,
+        fields?: Array<CategoryTreeFields>
+    ) {
+        const service = id ? CategoryService.getTreeById : CategoryService.getTreeBySlug
+        const param = id ?? slug
 
-    const result = await service(param, fields)
+        const result = await service(param, fields)
 
-    setCategoryTree(result)
-  }
+        setCategoryTree(result)
+    }
 
-  useEffect(() => {
-    getOne({ id, slug }, fields)
-  }, [])
+    useEffect(() => {
+        getOne({ id, slug }, fields)
+    }, [])
 
-  return categoryTree
+    return categoryTree
 }
