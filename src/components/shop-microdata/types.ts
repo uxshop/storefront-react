@@ -1,5 +1,5 @@
-import { Shop } from '../../../core/types/ShopTypes'
+import { Shop } from '@uxshop/storefront-core/dist/types/ShopTypes'
 
 export interface ShopMicroDataProps {
-  data: Shop
+    data: Shop
 }

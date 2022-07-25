@@ -1,17 +1,17 @@
+import { ShopService } from '@uxshop/storefront-core/dist/modules/shop/ShopService'
 import { useEffect, useState } from 'react'
-import { services } from '../../core'
 
 export function useShop(): any {
-  const [shop, setShop] = useState<any>()
+    const [shop, setShop] = useState<any>()
 
-  async function getShop() {
-    const result = await services.shop.getShop()
-    setShop(result)
-  }
+    async function getShop() {
+        const result = await ShopService.getShop()
+        setShop(result)
+    }
 
-  useEffect(() => {
-    getShop()
-  }, [])
+    useEffect(() => {
+        getShop()
+    }, [])
 
-  return shop
+    return shop
 }

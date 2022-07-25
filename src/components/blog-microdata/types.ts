@@ -1,9 +1,9 @@
-import { Post } from '../../../core/types/PostTypes'
+import { Post } from '@uxshop/storefront-core/dist/types/PostTypes'
 
 export interface BlogCategoryMicroDataProps {
-  data: Post[]
+    data: Post[]
 }
 
 export interface BlogPostMicroDataProps {
-  data: Post
+    data: Post
 }

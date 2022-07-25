@@ -1,31 +1,36 @@
+import { ScriptsService } from '@uxshop/storefront-core/dist/modules/scripts/ScriptsService'
+import { ScriptFields } from '@uxshop/storefront-core/dist/modules/scripts/ScriptsTypes'
 import { useEffect, useState } from 'react'
-import { ScriptFields } from '../../core/modules/scripts/ScriptsTypes'
-import { services } from '../../core'
-
 interface ScriptsHookParam {
-  page?: string
-  location?: string
+    page?: string
+    location?: string
 }
 
-export function useScripts({ page, location }: ScriptsHookParam, fields?: Array<ScriptFields>): any {
-  const [scripts, setScripts] = useState<any>()
+export function useScripts(
+    { page, location }: ScriptsHookParam,
+    fields?: Array<ScriptFields>
+): any {
+    const [scripts, setScripts] = useState<any>()
 
-  async function getScriptsByFilter({ page, location }: ScriptsHookParam, fields?: Array<ScriptFields>) {
-    const service = page ? services.scripts.getListByPage : services.scripts.getListByLocation
-    const param = page ?? location
+    async function getScriptsByFilter(
+        { page, location }: ScriptsHookParam,
+        fields?: Array<ScriptFields>
+    ) {
+        const service = page ? ScriptsService.getListByPage : ScriptsService.getListByLocation
+        const param = page ?? location
 
-    const result = await service(param, fields)
-    setScripts(result)
-  }
+        const result = await service(param, fields)
+        setScripts(result)
+    }
 
-  async function getAllScripts(fields?: Array<ScriptFields>) {
-    const result = await services.scripts.getList(fields)
-    setScripts(result)
-  }
+    async function getAllScripts(fields?: Array<ScriptFields>) {
+        const result = await ScriptsService.getList(fields)
+        setScripts(result)
+    }
 
-  useEffect(() => {
-    page || location ? getScriptsByFilter({ page, location }, fields) : getAllScripts(fields)
-  }, [])
+    useEffect(() => {
+        page || location ? getScriptsByFilter({ page, location }, fields) : getAllScripts(fields)
+    }, [])
 
-  return scripts
+    return scripts
 }
