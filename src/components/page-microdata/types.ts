@@ -1,4 +1,4 @@
-import { Page } from '@uxshop/storefront-core/dist/modules/pages/PageTypes'
+import { Page } from '@uxshop/storefront-core/dist/types/PageTypes'
 
 export interface PageMicroDataProps {
     data: Page
