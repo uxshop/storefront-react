@@ -16,7 +16,7 @@
         "@types/react": "^18.0.9",
         "@types/react-dom": "^18.0.3",
         "@urql/core": "^2.3.3",
-        "@uxshop/storefront-components": "../storefront-components",
+        "@uxshop/storefront-components": "https://github.com/uxshop/storefront-components",
         "@uxshop/storefront-core": "https://github.com/uxshop/storefront-core",
         "graphql": "^15.6.1",
         "react": "^17.0.2",
