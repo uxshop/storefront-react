@@ -27,3 +27,4 @@ export { ProductItemMicroData } from './components/product-microdata/product-ite
 export { SomeProductsMicroData } from './components/product-microdata/some-products'
 export { ShopMicroData } from './components/shop-microdata'
 export { PageMicroData } from './components/page-microdata'
+export { UxVideo } from './components/ux-video'
