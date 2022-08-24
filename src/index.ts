@@ -28,3 +28,4 @@ export { SomeProductsMicroData } from './components/product-microdata/some-produ
 export { ShopMicroData } from './components/shop-microdata'
 export { PageMicroData } from './components/page-microdata'
 export { UxVideo } from './components/ux-video'
+export { UxTextImage } from './components/ux-text-image'
