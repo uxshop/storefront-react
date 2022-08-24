@@ -4,6 +4,7 @@ import { useUser } from '@uxshop/storefront-react/lib/hooks/use-user'
 import { Sections } from '@uxshop/storefront-react/lib/components/sections'
 import { UxVideo } from '@uxshop/storefront-react'
 import { UxTextImage } from '@uxshop/storefront-react'
+import { UxTestimonials } from '@uxshop/storefront-react'
 import { useEffect } from 'react'
 import Html from './components/html'
 
@@ -45,11 +46,52 @@ function App() {
         side: 'left'
     }
 
+    const testimonialsSettings = {
+        title: 'testando título testimonials',
+        description: 'testando descrição testimonials'
+    }
+
+    const testimonialsBlocks = [
+        {
+            customer: {
+                name: 'Nome do cliente',
+                icon: 'https://dooca.com.br/assets/img/home/leandro-schimitt.png'
+            },
+            message:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at velit et orci ultricies tincidunt. Aenean imperdiet orci tortor, vel semper orci blandit at. Mauris vehicula nec est id tempus. Quisque ac risus at nisi bibendum porttitor'
+        },
+        {
+            customer: {
+                name: 'Nome do cliente',
+                icon: 'https://dooca.com.br/assets/img/home/leandro-schimitt.png'
+            },
+            message:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at velit et orci ultricies tincidunt. Aenean imperdiet orci tortor, vel semper orci blandit at. Mauris vehicula nec est id tempus. Quisque ac risus at nisi bibendum porttitor'
+        },
+        {
+            customer: {
+                name: 'Nome do cliente',
+                icon: 'https://dooca.com.br/assets/img/home/leandro-schimitt.png'
+            },
+            message:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at velit et orci ultricies tincidunt. Aenean imperdiet orci tortor, vel semper orci blandit at. Mauris vehicula nec est id tempus. Quisque ac risus at nisi bibendum porttitor'
+        },
+        {
+            customer: {
+                name: 'Nome do cliente',
+                icon: 'https://dooca.com.br/assets/img/home/leandro-schimitt.png'
+            },
+            message:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at velit et orci ultricies tincidunt. Aenean imperdiet orci tortor, vel semper orci blandit at. Mauris vehicula nec est id tempus. Quisque ac risus at nisi bibendum porttitor'
+        }
+    ]
+
     return (
         <div className="App">
             <h1>Teste {user && user.data.email}</h1>
             <UxVideo settings={dataVideo} />
             <UxTextImage settings={dataUxTextImage} />
+            <UxTestimonials settings={testimonialsSettings} blocks={testimonialsBlocks} />
             <Sections components={components} />
         </div>
     )
