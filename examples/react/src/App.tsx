@@ -4,6 +4,7 @@ import { useUser } from '@uxshop/storefront-react/lib/hooks/use-user'
 import { Sections } from '@uxshop/storefront-react/lib/components/sections'
 import { UxVideo } from '@uxshop/storefront-react'
 import { UxTextImage } from '@uxshop/storefront-react'
+import { UxBanners } from '@uxshop/storefront-react'
 import { useEffect } from 'react'
 import Html from './components/html'
 
@@ -45,11 +46,23 @@ function App() {
         side: 'left'
     }
 
+    const dataUxBanners = [
+        {
+            srcMobile: 'https://cdn.dooca.store/2617/files/b3-1.jpg',
+            srcDesktop: 'https://cdn.dooca.store/2617/files/hero2.jpg'
+        },
+        {
+            srcMobile: 'https://cdn.dooca.store/2617/files/b3-1.jpg',
+            srcDesktop: 'https://cdn.dooca.store/2617/files/hero2.jpg'
+        }
+    ]
+
     return (
         <div className="App">
             <h1>Teste {user && user.data.email}</h1>
             <UxVideo settings={dataVideo} />
             <UxTextImage settings={dataUxTextImage} />
+            <UxBanners blocks={dataUxBanners} />
             <Sections components={components} />
         </div>
     )
