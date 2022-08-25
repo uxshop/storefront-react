@@ -14,6 +14,7 @@ interface Routes {
     landingpage: RouteItem
     blog: RouteItem
     blogPost: RouteItem
+    blogCategory: RouteItem
 }
 
 const defautRoutes: Routes = {
@@ -41,13 +42,17 @@ const defautRoutes: Routes = {
         path: ':slug/lp',
         component: 'landingpage'
     },
-    blog: {
-        path: 'blog/:slug',
-        component: 'blog'
-    },
     blogPost: {
         path: 'blog/:category/:slug',
         component: 'blog-post'
+    },
+    blogCategory: {
+        path: 'blog/:slug',
+        component: 'blog'
+    },
+    blog: {
+        path: 'blog/',
+        component: 'blog'
     }
 }
 
