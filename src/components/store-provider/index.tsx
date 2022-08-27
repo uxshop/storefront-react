@@ -3,8 +3,9 @@ import { BrowserRouter } from 'react-router-dom'
 import RootProvider from './root-provider'
 
 export function StoreProvider(props: any) {
+    const basename = props.basename ?? '/'
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={basename}>
             <RootProvider pages={props.pages} routes={props.routes} />
         </BrowserRouter>
     )
