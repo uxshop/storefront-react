@@ -15,6 +15,7 @@ interface Routes {
     blog: RouteItem
     blogPost: RouteItem
     blogCategory: RouteItem
+    search: RouteItem
 }
 
 const defautRoutes: Routes = {
@@ -33,6 +34,10 @@ const defautRoutes: Routes = {
     brand: {
         path: ':slug/b',
         component: 'brand'
+    },
+    search: {
+        path: 'busca/',
+        component: 'search'
     },
     institutional: {
         path: ':slug/i',
