@@ -12,7 +12,7 @@ const routesConfig = (pages: any, newRoutes = {}) => {
             return {
                 index: id === 'home',
                 path: item?.path ?? null,
-                element: (
+                element: Component && (
                     <React.Suspense fallback="loading...">
                         <Component />
                     </React.Suspense>
