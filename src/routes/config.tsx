@@ -13,7 +13,7 @@ const routesConfig = (pages: any, newRoutes = {}) => {
                 index: id === 'home',
                 path: item?.path ?? null,
                 element: Component && (
-                    <React.Suspense>
+                    <React.Suspense fallback="">
                         <Component />
                     </React.Suspense>
                 )
@@ -27,7 +27,7 @@ const routesConfig = (pages: any, newRoutes = {}) => {
         {
             path: '/',
             element: (
-                <React.Suspense>
+                <React.Suspense fallback="">
                     <Layout />
                 </React.Suspense>
             ),

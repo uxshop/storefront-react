@@ -8,7 +8,7 @@ export function SectionLoader(props: SectionLoaderProps) {
     return (
         <>
             {!props.disabled && DynamicComponent && (
-                <Suspense>
+                <Suspense fallback="">
                     <section data-section-id={props.id}>
                         <DynamicComponent
                             settings={props.settings}
