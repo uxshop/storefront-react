@@ -4,6 +4,7 @@ import { useUser } from '@uxshop/storefront-react/lib/hooks/use-user'
 import { Sections } from '@uxshop/storefront-react/lib/components/sections'
 import { UxVideo } from '@uxshop/storefront-react'
 import { UxTextImage } from '@uxshop/storefront-react'
+import { useShowcases } from '@uxshop/storefront-react/lib/hooks/use-showcases'
 import { useEffect } from 'react'
 import Html from './components/html'
 
@@ -44,6 +45,10 @@ function App() {
         image: 'https://dooca.com.br/assets/img/home/venda-no-instagram-e-google.jpg',
         side: 'left'
     }
+
+    const showcases = useShowcases({ pagination: { page: 1 } })
+
+    useEffect(() => console.log(showcases))
 
     return (
         <div className="App">
