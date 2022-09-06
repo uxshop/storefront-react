@@ -2,7 +2,7 @@ import { useSettings } from '@uxshop/storefront-react/lib/hooks/use-settings'
 import { useSections } from '@uxshop/storefront-react/lib/hooks/use-sections'
 import { useUser } from '@uxshop/storefront-react/lib/hooks/use-user'
 import { Sections } from '@uxshop/storefront-react/lib/components/sections'
-import { useApps, UxVideo } from '@uxshop/storefront-react'
+import { useApps, useBlogCategories, useBlogPosts, UxVideo } from '@uxshop/storefront-react'
 import { UxTextImage } from '@uxshop/storefront-react'
 import { useShowcases } from '@uxshop/storefront-react/lib/hooks/use-showcases'
 import { useEffect } from 'react'
@@ -46,9 +46,9 @@ function App() {
     side: 'left'
   }
 
-  const apps = useApps({ id: '1041' })
+  const showcase = useShowcases({ pagination: { page: 2, items: 3 } })
 
-  useEffect(() => console.log(apps))
+  useEffect(() => console.table(showcase.edges))
 
   return (
     <div className="App">
