@@ -30,7 +30,6 @@ export function useShowcases(
   }
 
   useEffect(() => {
-    console.log(pagination)
     id || slug ? getOne({ id, slug }, fields) : getList(pagination, fields)
   }, [pagination])
 
