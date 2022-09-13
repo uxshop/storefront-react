@@ -16,7 +16,7 @@ export function useSidebar(sidebarFilter?: Array<SidebarHookParams>): any {
 
   useEffect(() => {
     get(sidebarFilter)
-  }, [])
+  }, [sidebarFilter])
 
   return sidebar
 }
