@@ -1,6 +1,6 @@
 // import { ShopService } from '@uxshop/storefront-core'
 import { useShowcases } from '@uxshop/storefront-react'
-import { useSidebar } from '@uxshop/storefront-react/lib/hooks/use-sidebar'
+import { useSidebar } from '@uxshop/storefront-react'
 import { useEffect } from 'react'
 
 function App() {
