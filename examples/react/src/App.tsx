@@ -1,9 +1,14 @@
 // import { ShopService } from '@uxshop/storefront-core'
-import { useStore } from '@uxshop/storefront-react'
+import { useShowcases } from '@uxshop/storefront-react'
+import { useSidebar } from '@uxshop/storefront-react'
+import { useEffect } from 'react'
 
 function App() {
   // const sections: any = ShopService
-  const shop = useStore()
+  const sidebar = useSidebar([{ id: 6450, name: 'Grande', type: 'attribute_secondary' }])
+  // const showcase = useShowcases({})
+
+  useEffect(() => console.log(sidebar), [sidebar])
   return <div className="App"></div>
 }
 
