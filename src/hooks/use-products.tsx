@@ -19,13 +19,13 @@ export function useProducts(
   { productId, slug, agg, filter }: ProductHookParams,
   fields?: Array<ProductFields>
 ): any {
-  const [showcases, setShowcases] = useState<any>()
+  const [products, setProducts] = useState<any>()
 
   async function getOne({ productId, slug }: GetOneParams, fields?: Array<ProductFields>) {
     const service = productId ? ProductService.getById : ProductService.getBySlug
     const param = productId ?? slug
     const result = await service(param, fields)
-    setShowcases(result)
+    setProducts(result)
   }
 
   async function getList(
@@ -34,12 +34,12 @@ export function useProducts(
     fields?: Array<ProductFields>
   ) {
     const result = await ProductService.getList({ filter, agg, fields })
-    setShowcases(result)
+    setProducts(result)
   }
 
   useEffect(() => {
     productId || slug ? getOne({ productId, slug }, fields) : getList(filter, agg, fields)
   }, [filter])
 
-  return showcases
+  return products
 }
