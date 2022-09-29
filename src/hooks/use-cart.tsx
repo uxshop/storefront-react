@@ -25,8 +25,9 @@ interface CartHook {
 const COOKIE_CART = '_dc_cart'
 
 export function useCart(): CartHook {
-  const [cart, setCart] = useState<Cart | {}>({})
-  const [cartToken, setCartToken] = useState<string>('')
+  const token = CookieService.getCookie(COOKIE_CART)
+  const [cart, setCart] = useState<Cart>({})
+  const [cartToken, setCartToken] = useState<string>(token)
   const [cartErrors, setCartErrors] = useState<CartErrors>({})
 
   function setToken(token: string) {
@@ -57,7 +58,7 @@ export function useCart(): CartHook {
     try {
       const updatedCart = await CartService.addItem({
         items: input,
-        ...(cartToken ? { cart_token: cartToken } : {})
+        cartToken: cartToken || null
       })
       updatedCart && setCart(updatedCart)
       !cartToken && setToken(updatedCart.token)
@@ -86,7 +87,6 @@ export function useCart(): CartHook {
         item: input,
         cartToken: cartToken
       })
-
       !updatedCart.items ? sanitizeCart() : setCart(updatedCart)
     } catch (error) {
       updateCartErrors(error)
@@ -95,7 +95,6 @@ export function useCart(): CartHook {
 
   async function getCart() {
     try {
-      if (!cartToken) throw new Error('')
       const result = await CartService.getCart(cartToken)
       setCart(result)
     } catch (error) {
@@ -105,11 +104,7 @@ export function useCart(): CartHook {
   }
 
   useEffect(() => {
-    const token = CookieService.getCookie(COOKIE_CART)
-    if (token) {
-      setToken(token)
-      getCart()
-    }
+    getCart()
   }, [])
 
   return {
