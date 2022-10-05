@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { doocaPlugin } from '@uxshop/storefront-core/dist/plugin/dc-vite'
-import config from './dooca.config'
+import { shopPlugin } from '@uxshop/storefront-core/dist/plugin/shop-vite'
+import config from './shop-config'
 
 export default defineConfig({
-    plugins: [doocaPlugin(config), react()]
+    plugins: [shopPlugin(config), react()]
 })
