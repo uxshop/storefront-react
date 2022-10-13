@@ -22,6 +22,7 @@ interface shop {
     shop?: any
     products?: any
     user?: any
+    freight?: any
   }
 }
 
