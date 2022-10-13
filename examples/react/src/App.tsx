@@ -1,6 +1,5 @@
 // import { ShopService } from '@uxshop/storefront-core'
-import { useCategoryTree, useFreights, useProducts, useUser } from '@uxshop/storefront-react'
-import { useEffect } from 'react'
+import { useFreights } from '@uxshop/storefront-react'
 
 function App() {
   const freights = useFreights({ variationId: '9468973', zipCode: '93037190' })

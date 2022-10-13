@@ -33,7 +33,7 @@ export function useFreights(
 
   useEffect(() => {
     getList({ variationId, zipCode, components }, fields)
-  }, [])
+  }, [variationId, zipCode, components])
 
   return freights
 }
