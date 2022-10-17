@@ -1,11 +1,11 @@
 // import { ShopService } from '@uxshop/storefront-core'
-import { useCategoryTree, useProducts } from '@uxshop/storefront-react'
-import { useSidebar } from '@uxshop/storefront-react'
-import { useEffect } from 'react'
+import { useFreights } from '@uxshop/storefront-react'
 
 function App() {
-  const categoryTree = useCategoryTree()
-  useEffect(() => console.log(categoryTree), [categoryTree])
+  const freights = useFreights({ variationId: '9468973', zipCode: '93037190' })
+
+  console.log(freights)
+
   return <div className="App"></div>
 }
 
