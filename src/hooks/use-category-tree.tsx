@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CategoryService } from '@uxshop/storefront-core/dist/modules/category/CategoryService'
+import { CategoryService } from '@uxshop/storefront-core'
 import { CategoryTreeFields } from '@uxshop/storefront-core/dist/modules/category/CategoryTypes'
 
 export function useCategoryTree(fields?: Array<CategoryTreeFields>) {

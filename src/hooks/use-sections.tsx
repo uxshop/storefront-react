@@ -1,7 +1,6 @@
-import { SectionsService } from '@uxshop/storefront-core/dist/modules/sections/SectionsService'
-import { SectionFilter } from '@uxshop/storefront-core/dist/modules/sections/SectionsTypes'
-import { Socket } from '@uxshop/storefront-core/dist/socket'
 import { useEffect, useState } from 'react'
+import { SectionsService, Socket } from '@uxshop/storefront-core'
+import { SectionFilter } from '@uxshop/storefront-core/dist/modules/sections/SectionsTypes'
 
 export function useSections(filter: SectionFilter): any {
   const urlParams = new URLSearchParams(window.location.search)
