@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import { SettingsService } from '@uxshop/storefront-core/dist/modules/settings/SettingsService'
-import { Socket } from '@uxshop/storefront-core/dist/socket'
+import { SettingsService, Socket } from '@uxshop/storefront-core'
 import { SettingFilter } from '@uxshop/storefront-core/dist/modules/settings/SettingsTypes'
 
 export function useSettings(filter: SettingFilter): any {

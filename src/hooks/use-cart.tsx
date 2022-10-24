@@ -1,12 +1,11 @@
-import { CookieService } from '@uxshop/storefront-core/dist/services/CookieService'
+import { useEffect, useState } from 'react'
+import { CartService, CookieService } from '@uxshop/storefront-core'
 import {
   Cart,
   CartItemAddInput,
   CartItemUpdateInput,
   CartItemDeleteInput
 } from '@uxshop/storefront-core/dist/modules/cart/CartTypes'
-import { useEffect, useState } from 'react'
-import { CartService } from '@uxshop/storefront-core/dist/modules/cart/CartService'
 
 type CartMutation<T> = (input: T) => Promise<any>
 

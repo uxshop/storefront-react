@@ -1,10 +1,10 @@
-import { FreightService } from '@uxshop/storefront-core/dist/modules/freight/FreightService'
+import { useEffect, useState } from 'react'
+import { FreightService } from '@uxshop/storefront-core'
 import {
   Freight,
   FreightFields,
   Shipping
 } from '@uxshop/storefront-core/dist/modules/freight/FreightTypes'
-import { useEffect, useState } from 'react'
 
 interface FreightHookParams extends Omit<Shipping, 'variationId'> {
   variationId: string

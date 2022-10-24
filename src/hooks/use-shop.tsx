@@ -1,5 +1,5 @@
-import { ShopService } from '@uxshop/storefront-core'
 import { useEffect, useState } from 'react'
+import { ShopService } from '@uxshop/storefront-core'
 
 export function useShop(): any {
   const [shop, setShop] = useState<any>()
