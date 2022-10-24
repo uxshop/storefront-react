@@ -1,12 +1,18 @@
-// import { ShopService } from '@uxshop/storefront-core'
-import { useFreights } from '@uxshop/storefront-react'
+import { useNewsletter } from '@uxshop/storefront-react'
 
 function App() {
-  const freights = useFreights({ variationId: '9468973', zipCode: '93037190' })
+  const { newsletter, subscribe } = useNewsletter()
 
-  console.log(freights)
+  console.log(newsletter)
 
-  return <div className="App"></div>
+  return (
+    <div className="App">
+      <h1>{newsletter ? newsletter.email : 'Diovani'}</h1>
+      <button onClick={() => subscribe({ email: 'tehgdfAbacateNedws@gmail.com', name })}>
+        Click
+      </button>
+    </div>
+  )
 }
 
 export default App

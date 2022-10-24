@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ProductService } from '@uxshop/storefront-core/dist/modules/product/ProductService'
+import { ProductService } from '@uxshop/storefront-core'
 import {
   ProductFields,
   ProductListFilter,

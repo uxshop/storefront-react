@@ -14,6 +14,7 @@ interface shop {
     cart?: any
     landing_pages?: any
     menu?: any
+    newsletter?: any
     pages?: any
     page?: any
     scripts?: any
