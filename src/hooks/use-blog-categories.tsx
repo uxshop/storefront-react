@@ -8,27 +8,25 @@ interface BlogCategoryHookParams {
 }
 
 export function useBlogCategories(
-  { id, slug }: BlogCategoryHookParams,
-  fields?: Array<BlogCategoryFields>
+  getOneFilter?: BlogCategoryHookParams,
+  fields?: BlogCategoryFields[]
 ): any {
   const [blogCategories, setBlogCategories] = useState<any>()
 
-  const service = BlogCategoryService
-
-  async function getOne({ id, slug }: BlogCategoryHookParams, fields?: Array<BlogCategoryFields>) {
+  async function getOne({ id, slug }: BlogCategoryHookParams, fields?: BlogCategoryFields[]) {
     const service = id ? BlogCategoryService.getById : BlogCategoryService.getBySlug
     const param = id ?? slug
     const result = await service(param, fields)
     setBlogCategories(result)
   }
 
-  async function getList(fields?: Array<BlogCategoryFields>) {
+  async function getList(fields?: BlogCategoryFields[]) {
     const result = await BlogCategoryService.getList(fields)
     setBlogCategories(result)
   }
 
   useEffect(() => {
-    id || slug ? getOne({ id, slug }, fields) : getList(fields)
+    getOneFilter?.id || getOneFilter?.slug ? getOne(getOneFilter, fields) : getList(fields)
   }, [])
 
   return blogCategories

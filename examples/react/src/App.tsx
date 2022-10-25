@@ -1,9 +1,11 @@
-import { useBlogPosts } from '@uxshop/storefront-react'
+import { useBlogCategories } from '@uxshop/storefront-react'
 
 function App() {
-  const blogPosts = useBlogPosts({ page: 1 })
-  console.log(blogPosts)
-  return <div className="App">{blogPosts && blogPosts.edges[0].node.id}</div>
+  const blogCategories = useBlogCategories()
+
+  console.log(blogCategories)
+
+  return <div className="App"></div>
 }
 
 export default App
