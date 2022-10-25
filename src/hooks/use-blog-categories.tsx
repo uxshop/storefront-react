@@ -26,7 +26,7 @@ export function useBlogCategories(
   }
 
   useEffect(() => {
-    getOneFilter ? getOne(getOneFilter, fields) : getList(fields)
+    getOneFilter?.id || getOneFilter?.slug ? getOne(getOneFilter, fields) : getList(fields)
   }, [])
 
   return blogCategories
