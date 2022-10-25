@@ -1,12 +1,12 @@
+import { useEffect, useState } from 'react'
 import { BlogPostService } from '@uxshop/storefront-core'
 import {
   BlogPostFields,
   BlogPostListFilter
 } from '@uxshop/storefront-core/dist/modules/blog/post/BlogPostTypes'
-import { PaginationFilter } from '@uxshop/storefront-core/dist/types/PaginationTypes'
-import { useEffect, useState } from 'react'
 
-interface BlogPostHookParams extends BlogPostListFilter {
+interface BlogPostHookParams extends Omit<BlogPostListFilter, 'page'> {
+  page?: number
   id?: string
   slug?: string
 }
