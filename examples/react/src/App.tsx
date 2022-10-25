@@ -1,18 +1,11 @@
-import { useNewsletter } from '@uxshop/storefront-react'
+import { useBlogCategories } from '@uxshop/storefront-react'
 
 function App() {
-  const { newsletter, subscribe } = useNewsletter()
+  const blogCategories = useBlogCategories()
 
-  console.log(newsletter)
+  console.log(blogCategories)
 
-  return (
-    <div className="App">
-      <h1>{newsletter ? newsletter.email : 'Diovani'}</h1>
-      <button onClick={() => subscribe({ email: 'tehgdfAbacateNedws@gmail.com', name })}>
-        Click
-      </button>
-    </div>
-  )
+  return <div className="App"></div>
 }
 
 export default App
