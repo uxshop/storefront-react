@@ -13,14 +13,14 @@ export function useBlogCategories(
 ): any {
   const [blogCategories, setBlogCategories] = useState<any>()
 
-  async function getOne({ id, slug }: BlogCategoryHookParams, fields?: Array<BlogCategoryFields>) {
+  async function getOne({ id, slug }: BlogCategoryHookParams, fields?: BlogCategoryFields[]) {
     const service = id ? BlogCategoryService.getById : BlogCategoryService.getBySlug
     const param = id ?? slug
     const result = await service(param, fields)
     setBlogCategories(result)
   }
 
-  async function getList(fields?: Array<BlogCategoryFields>) {
+  async function getList(fields?: BlogCategoryFields[]) {
     const result = await BlogCategoryService.getList(fields)
     setBlogCategories(result)
   }
