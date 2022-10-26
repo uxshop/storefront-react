@@ -12,7 +12,7 @@ interface BlogPostHookParams extends Omit<BlogPostListFilter, 'page'> {
 }
 
 export function useBlogPosts(
-  { id, slug, page, first, post_category_id }: BlogPostHookParams,
+  { id, slug, page, first, post_category_id, fastSearch }: BlogPostHookParams,
   fields?: Array<BlogPostFields>
 ): any {
   const [blogPosts, setBlogPosts] = useState<any>()
@@ -30,8 +30,10 @@ export function useBlogPosts(
   }
 
   useEffect(() => {
-    id || slug ? getOne(id, slug, fields) : getList({ page, first, post_category_id }, fields)
-  }, [id, slug, page, first, post_category_id, fields])
+    id || slug
+      ? getOne(id, slug, fields)
+      : getList({ page, first, post_category_id, fastSearch }, fields)
+  }, [id, slug, page, first, post_category_id, fastSearch, fields])
 
   return blogPosts
 }
