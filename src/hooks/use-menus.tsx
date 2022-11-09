@@ -21,7 +21,7 @@ export function useMenus({ id }: MenuHookParams, fields?: Array<MenuFields>): an
 
   useEffect(() => {
     id ? getOneById(id, fields) : getList(fields)
-  }, [])
+  }, [id])
 
   return menus
 }
