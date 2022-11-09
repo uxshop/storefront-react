@@ -1,4 +1,4 @@
-import { nullable } from '@uxshop/storefront-core/src/types/NullableTypes'
+import { nullable } from '@uxshop/storefront-core/src/types/HelpersTypes'
 
 interface RouteItem {
   path: nullable<string>
@@ -19,7 +19,7 @@ interface Routes {
   search: RouteItem
 }
 
-const defautRoutes: Routes = {
+const defaultRoutes: Routes = {
   home: {
     path: null,
     component: 'home'
@@ -66,4 +66,4 @@ const defautRoutes: Routes = {
   }
 }
 
-export default defautRoutes
+export default defaultRoutes
