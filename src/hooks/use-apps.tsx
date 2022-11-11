@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
-import { AppsService } from '@uxshop/storefront-core'
-import { AppsFields } from '@uxshop/storefront-core/dist/modules/apps/AppsTypes'
+import { AppService } from '@uxshop/storefront-core'
+import {AppFields} from '@uxshop/storefront-core/dist/modules/app/AppTypes'
 
 interface AppHookParams {
   id: string
 }
 
-export function useApps({ id }: AppHookParams, fields?: Array<AppsFields>): any {
+export function useApps({ id }: AppHookParams, fields?: AppFields[]): any {
   const [apps, setApps] = useState<any>()
 
-  async function getById({ id }: AppHookParams, fields?: Array<AppsFields>) {
-    const result = await AppsService.getById(id, fields)
+  async function getById({ id }: AppHookParams, fields?: AppFields[]) {
+    const result = await AppService.getById(id, fields)
     setApps(result)
   }
 
