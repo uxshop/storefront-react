@@ -1,6 +1,6 @@
 import React from 'react'
 import { UxBannersProps } from './types'
-import { defineCustomElement as defineUxBanners } from '@uxshop/storefront-components/dist/components/ux-text-image'
+import { defineCustomElement as defineUxBanners } from '@uxshop/storefront-components/dist/components/ux-banners'
 
 export function UxBanners({ settings }: UxBannersProps) {
   const dataProps = {
