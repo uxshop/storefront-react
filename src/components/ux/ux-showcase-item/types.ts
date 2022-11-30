@@ -1,11 +1,11 @@
 export interface UxShowcaseItemSettings {
-  hasInterest?: boolean
   href: string
   image: string
   name: string
+  price: number
+  hasInterest?: boolean
   parcelPrice?: number
   parcels?: number
-  price: number
   priceCompare?: number
 }
 
