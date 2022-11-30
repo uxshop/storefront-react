@@ -1,7 +1,7 @@
-export interface SettingsUxBanners {
+export interface UxBannersSettings {
   dataImages?: string
 }
 
 export interface UxBannersProps {
-  settings: SettingsUxBanners
+  settings: UxBannersSettings
 }
