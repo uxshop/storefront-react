@@ -1,6 +1,6 @@
 import React from 'react'
 import { UxCarouselProps } from './types'
-import { defineCustomElement as defineUxCarousel } from '@uxshop/storefront-components/dist/components/ux-text-image'
+import { defineCustomElement as defineUxCarousel } from '@uxshop/storefront-components/dist/components/ux-carousel'
 
 export function UxCarousel({ settings }: UxCarouselProps) {
   const dataProps = {
