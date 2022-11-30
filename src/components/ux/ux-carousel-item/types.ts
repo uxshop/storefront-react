@@ -1,4 +1,4 @@
-export interface SettingsUxCarouselItem {
+export interface UxCarouselItemSettings {
   title?: string
   description?: string
   buttonLabel?: string
@@ -8,5 +8,5 @@ export interface SettingsUxCarouselItem {
 }
 
 export interface UxCarouselItemProps {
-  settings: SettingsUxCarouselItem
+  settings: UxCarouselItemSettings
 }
