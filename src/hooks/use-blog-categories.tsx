@@ -12,22 +12,31 @@ export function useBlogCategories(
   fields?: BlogCategoryFields[]
 ): any {
   const [blogCategories, setBlogCategories] = useState<any>()
+  const [error, setError] = useState()
 
   async function getOne({ id, slug }: BlogCategoryHookParams, fields?: BlogCategoryFields[]) {
-    const service = id ? BlogCategoryService.getById : BlogCategoryService.getBySlug
-    const param = id ?? slug
-    const result = await service(param, fields)
-    setBlogCategories(result)
+    try {
+      const service = id ? BlogCategoryService.getById : BlogCategoryService.getBySlug
+      const param = id ?? slug
+      const result = await service(param, fields)
+      setBlogCategories(result)
+    } catch (error) {
+      setError(error)
+    }
   }
 
   async function getList(fields?: BlogCategoryFields[]) {
-    const result = await BlogCategoryService.getList(fields)
-    setBlogCategories(result)
+    try {
+      const result = await BlogCategoryService.getList(fields)
+      setBlogCategories(result)
+    } catch (error) {
+      setError(error)
+    }
   }
 
   useEffect(() => {
     getOneFilter?.id || getOneFilter?.slug ? getOne(getOneFilter, fields) : getList(fields)
   }, [])
 
-  return blogCategories
+  return { blogCategories, error }
 }
