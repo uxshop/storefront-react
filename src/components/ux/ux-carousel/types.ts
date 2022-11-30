@@ -1,4 +1,4 @@
-export interface SettingsUxCarousel {
+export interface UxCarouselSettings {
   rewind?: boolean
   autoplay?: boolean
   arrows?: boolean
@@ -6,5 +6,5 @@ export interface SettingsUxCarousel {
 }
 
 export interface UxCarouselProps {
-  settings: SettingsUxCarousel
+  settings: UxCarouselSettings
 }
