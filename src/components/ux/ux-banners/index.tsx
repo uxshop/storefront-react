@@ -4,7 +4,7 @@ import { defineCustomElement as defineUxBanners } from '@uxshop/storefront-compo
 
 export function UxBanners({ settings }: UxBannersProps) {
   const dataProps = {
-    'data-list': settings.list
+    'data-images': settings.dataImages
   }
 
   defineUxBanners()
