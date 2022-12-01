@@ -4,15 +4,20 @@ import { CategoryTreeFields } from '@uxshop/storefront-core/dist/modules/categor
 
 export function useCategoryTree(fields?: Array<CategoryTreeFields>) {
   const [categoryTree, setCategoryTree] = useState<any>()
+  const [error, setError] = useState()
 
   async function get(fields?: Array<CategoryTreeFields>) {
-    const result = await CategoryService.getTree(fields)
-    setCategoryTree(result)
+    try {
+      const result = await CategoryService.getTree(fields)
+      setCategoryTree(result)
+    } catch (error) {
+      setError(error)
+    }
   }
 
   useEffect(() => {
     get(fields)
   }, [])
 
-  return categoryTree
+  return { categoryTree, error }
 }
