@@ -1,15 +1,10 @@
-import { useBlogCategories, useBlogPosts, useCart } from '@uxshop/storefront-react'
-import { useEffect, useState } from 'react'
-import { useFetcher } from 'react-router-dom'
+import { useBlogCategories } from '@uxshop/storefront-react'
 
 function App() {
-  const [loading, setLoading] = useState(false)
+  const blogCategories = useBlogCategories()
 
-  const cart = useBlogPosts({ id: 'jdj' })
+  console.log(blogCategories)
 
-  console.log('🚀 ~ file: App.tsx:10 ~ App ~ blogCategories', cart.errors)
-
-  useEffect(() => {}, [])
   return <div className="App"></div>
 }
 
