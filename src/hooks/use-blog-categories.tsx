@@ -38,5 +38,5 @@ export function useBlogCategories(
     getOneFilter?.id || getOneFilter?.slug ? getOne(getOneFilter, fields) : getList(fields)
   }, [])
 
-  return { blogCategories, error }
+  return { data: blogCategories, errors: error }
 }
