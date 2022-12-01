@@ -11,12 +11,14 @@ interface FreightHookParams extends Omit<Shipping, 'variationId'> {
 }
 
 interface FreightData {
+  errors: any
   isLoading: boolean
-  freights: Freight[]
+  data: Freight[]
 }
 
 export function useFreights(params: FreightHookParams, fields?: FreightFields[]): FreightData {
   const [freights, setFreights] = useState<any>([])
+  const [error, setError] = useState()
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   async function fetchFreights() {
@@ -28,8 +30,9 @@ export function useFreights(params: FreightHookParams, fields?: FreightFields[])
   async function getList() {
     try {
       await fetchFreights()
-    } catch {
+    } catch (error) {
       setFreights([])
+      setError(error)
     } finally {
       setIsLoading(false)
     }
@@ -40,5 +43,5 @@ export function useFreights(params: FreightHookParams, fields?: FreightFields[])
     getList()
   }, [params.variationId, params.zipCode, params.components])
 
-  return { freights, isLoading }
+  return { data: freights, isLoading: isLoading, errors: error }
 }
