@@ -50,5 +50,5 @@ export function useBlogPosts(
       : getList({ page, first, postCategoryId }, searchTerm, fields)
   }, [id, slug, page, first, postCategoryId, searchTerm, fields])
 
-  return { blogPosts, error }
+  return { data: blogPosts, errors: error }
 }
