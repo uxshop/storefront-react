@@ -7,13 +7,13 @@ interface AppHookParams {
 }
 
 export function useApps({ id }: AppHookParams, fields?: AppFields[]): any {
-  const [data, setData] = useState<App>()
+  const [apps, setApps] = useState<App>()
   const [error, setError] = useState()
 
   async function getById({ id }: AppHookParams, fields?: AppFields[]) {
     try {
       const result = await AppService.getById(id, fields)
-      setData(result)
+      setApps(result)
     } catch (error) {
       setError(error)
     }
@@ -23,5 +23,5 @@ export function useApps({ id }: AppHookParams, fields?: AppFields[]): any {
     getById({ id }, fields)
   }, [])
 
-  return { data, error }
+  return { data: apps, errors: error }
 }
