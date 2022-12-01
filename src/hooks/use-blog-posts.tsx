@@ -17,12 +17,17 @@ export function useBlogPosts(
   fields?: Array<BlogPostFields>
 ): any {
   const [blogPosts, setBlogPosts] = useState<any>()
+  const [error, setError] = useState()
 
   async function getOne(id?: string, slug?: string, fields?: BlogPostFields[]) {
-    const service = id ? BlogPostService.getById : BlogPostService.getBySlug
-    const param = id ?? slug
-    const result = await service(param, fields)
-    setBlogPosts(result)
+    try {
+      const service = id ? BlogPostService.getById : BlogPostService.getBySlug
+      const param = id ?? slug
+      const result = await service(param, fields)
+      setBlogPosts(result)
+    } catch (error) {
+      setError(error)
+    }
   }
 
   async function getList(
@@ -30,12 +35,12 @@ export function useBlogPosts(
     searchTerm?: string,
     fields?: BlogPostFields[]
   ) {
-    const fastSearch = searchTerm ? { fastSearch: { queryString: searchTerm } } : {}
     try {
+      const fastSearch = searchTerm ? { fastSearch: { queryString: searchTerm } } : {}
       const result = await BlogPostService.getList({ ...filter, ...fastSearch }, fields)
       setBlogPosts(result)
     } catch (error) {
-      setBlogPosts(null)
+      setError(error)
     }
   }
 
@@ -45,5 +50,5 @@ export function useBlogPosts(
       : getList({ page, first, postCategoryId }, searchTerm, fields)
   }, [id, slug, page, first, postCategoryId, searchTerm, fields])
 
-  return blogPosts
+  return { blogPosts, error }
 }
