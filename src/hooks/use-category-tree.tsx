@@ -19,5 +19,5 @@ export function useCategoryTree(fields?: Array<CategoryTreeFields>) {
     get(fields)
   }, [])
 
-  return { categoryTree, error }
+  return { data: categoryTree, errors: error }
 }
