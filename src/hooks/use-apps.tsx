@@ -1,27 +1,22 @@
-import { useEffect, useState } from 'react'
 import { AppService } from '@uxshop/storefront-core'
-import { App, AppFields } from '@uxshop/storefront-core/dist/modules/app/AppTypes'
+import { AppFields } from '@uxshop/storefront-core/dist/modules/app/AppTypes'
 
 interface AppHookParams {
   id: string
 }
 
 export function useApps({ id }: AppHookParams, fields?: AppFields[]): any {
-  const [apps, setApps] = useState<App>()
-  const [error, setError] = useState()
-
-  async function getById({ id }: AppHookParams, fields?: AppFields[]) {
-    try {
-      const result = await AppService.getById(id, fields)
-      setApps(result)
-    } catch (error) {
-      setError(error)
+  function getById({ id }: AppHookParams, fields?: AppFields[]) {
+    let result = {
+      data: null,
+      error: null
     }
+    AppService.getById(id, fields)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
+
+    return result
   }
 
-  useEffect(() => {
-    getById({ id }, fields)
-  }, [])
-
-  return { data: apps, errors: error }
+  return getById({ id }, fields)
 }
