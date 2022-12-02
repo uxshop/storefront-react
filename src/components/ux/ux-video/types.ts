@@ -1,9 +1,9 @@
-export interface settingsVideo {
-    title?: string
-    description?: string
-    url: string
+export interface UxVideoSettings {
+  title?: string
+  description?: string
+  url: string
 }
 
-export interface uxVideoProps {
-    settings: settingsVideo
+export interface UxVideoProps {
+  settings: UxVideoSettings
 }
