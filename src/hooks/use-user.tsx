@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { UserService, CookieService } from '@uxshop/storefront-core'
 import {
   User,
@@ -6,68 +5,64 @@ import {
   UserFields
 } from '@uxshop/storefront-core/dist/modules/user/UserTypes'
 interface UserHook {
-  data: User
+  result: any
   auth: (credentials: LoginCredentials) => Promise<any>
 }
 
 const COOKIE_USER = '_dc_token'
 
 export function useUser(credentials: LoginCredentials): UserHook {
-  const [user, setUser] = useState<User>({})
-  const [userToken, setUserToken] = useState<string>('')
+  const tokenExists = CookieService.getCookie(COOKIE_USER)
+  if (tokenExists) {
+    setToken(tokenExists)
+    get(tokenExists)
+  } else {
+    credentials && auth(credentials)
+  }
 
   function setToken(token: string) {
     if (token) {
-      setUserToken(token)
       CookieService.setCookie(COOKIE_USER, token, 7)
     }
   }
 
   function setUserData(user: User) {
-    setUser(user)
     setToken(user.token)
   }
 
-  function eraseToken() {
-    setUserToken('')
-    CookieService.eraseCookie(COOKIE_USER)
-  }
-
-  function cleanUserData() {
-    eraseToken()
-    setUser({})
-  }
-
   async function get(token: string) {
-    try {
-      const user = await UserService.get(token)
-      user && setUserData(user)
-    } catch (error) {
-      cleanUserData()
+    let result = {
+      data: null,
+      error: null
     }
+
+    UserService.get(token)
+      .then(response => (result.data = response))
+      .catch(error => {
+        result.error = error
+      })
+    setUserData(result.data?.user)
+
+    return { data: result.data, error: result.error }
   }
 
-  async function auth(credentials: LoginCredentials, fields?: Array<UserFields>): Promise<any> {
-    try {
-      const user = await UserService.auth(credentials)
-      user && setUserData(user)
-    } catch (error) {
-      cleanUserData()
+  function auth(credentials: LoginCredentials, fields?: UserFields[]): any {
+    let result = {
+      data: null,
+      error: null
     }
+
+    UserService.auth(credentials)
+      .then(response => {
+        setUserData(result.data?.user)
+        result.data = response
+      })
+      .catch(error => {
+        result.error = error
+      })
+
+    return result
   }
 
-  useEffect(() => {
-    const token = CookieService.getCookie(COOKIE_USER)
-    if (token) {
-      setToken(token)
-      get(token)
-    } else {
-      credentials && auth(credentials)
-    }
-  }, [])
-
-  return {
-    data: user,
-    auth: auth
-  }
+  return tokenExists ? get(tokenExists) : auth(credentials)
 }
