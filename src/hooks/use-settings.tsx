@@ -1,30 +1,29 @@
-import { useEffect, useState } from 'react'
 import { SettingsService, Socket } from '@uxshop/storefront-core'
 import { SettingFilter } from '@uxshop/storefront-core/dist/modules/settings/SettingsTypes'
 
 export function useSettings(filter: SettingFilter): any {
   const urlParams = new URLSearchParams(window.location.search)
   const hashPreview = urlParams.get('preview')
-  const [settings, setSettings] = useState<any>()
 
-  async function getSettings() {
-    const result = await SettingsService.getOne(filter)
+  function getSettings() {
+    let result = {
+      data: null,
+      error: null
+    }
+    SettingsService.getOne(filter)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
 
-    setSettings(result.data)
+    if (hashPreview) {
+      Socket.create(hashPreview, onUpdate)
+    }
+    return result
   }
 
   function onUpdate({ data }: any) {
     if (data) {
-      setSettings(data?.settings)
     }
   }
 
-  useEffect(() => {
-    getSettings()
-    if (hashPreview) {
-      Socket.create(hashPreview, onUpdate)
-    }
-  }, [])
-
-  return settings
+  return getSettings()
 }
