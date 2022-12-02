@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { ProductService } from '@uxshop/storefront-core'
 import {
   ProductFields,
@@ -19,27 +18,31 @@ export function useProducts(
   { productId, slug, agg, filter }: ProductHookParams,
   fields?: Array<ProductFields>
 ): any {
-  const [products, setProducts] = useState<any>()
-
-  async function getOne({ productId, slug }: GetOneParams, fields?: Array<ProductFields>) {
+  function getOne({ productId, slug }: GetOneParams, fields?: Array<ProductFields>) {
+    let result = {
+      data: null,
+      error: null
+    }
     const service = productId ? ProductService.getById : ProductService.getBySlug
     const param = productId ?? slug
-    const result = await service(param, fields)
-    setProducts(result)
+    service(param, fields)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
+
+    return result
   }
 
-  async function getList(
-    filter?: ProductListFilter,
-    agg?: Aggregator,
-    fields?: Array<ProductFields>
-  ) {
-    const result = await ProductService.getList({ filter, agg, fields })
-    setProducts(result)
+  function getList(filter?: ProductListFilter, agg?: Aggregator, fields?: Array<ProductFields>) {
+    let result = {
+      data: null,
+      error: null
+    }
+    ProductService.getList({ filter, agg, fields })
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
+
+    return result
   }
 
-  useEffect(() => {
-    productId || slug ? getOne({ productId, slug }, fields) : getList(filter, agg, fields)
-  }, [filter])
-
-  return products
+  return productId || slug ? getOne({ productId, slug }, fields) : getList(filter, agg, fields)
 }
