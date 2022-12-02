@@ -11,34 +11,23 @@ interface FreightHookParams extends Omit<Shipping, 'variationId'> {
 }
 
 interface FreightData {
-  isLoading: boolean
-  freights: Freight[]
+  data: Freight[]
 }
 
 export function useFreights(params: FreightHookParams, fields?: FreightFields[]): FreightData {
-  const [freights, setFreights] = useState<any>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-
-  async function fetchFreights() {
-    const result =
-      params.variationId && params.zipCode && (await FreightService.getList(params, fields))
-    setFreights(result)
-  }
-
-  async function getList() {
-    try {
-      await fetchFreights()
-    } catch {
-      setFreights([])
-    } finally {
-      setIsLoading(false)
+  function getList(params: FreightHookParams, fields?: FreightFields[]) {
+    let result = {
+      data: null,
+      error: null
     }
+    const service = params.variationId && params.zipCode && FreightService.getList
+
+    service(params, fields)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
+
+    return result
   }
 
-  useEffect(() => {
-    setIsLoading(true)
-    getList()
-  }, [params.variationId, params.zipCode, params.components])
-
-  return { freights, isLoading }
+  return getList(params, fields)
 }
