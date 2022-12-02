@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { BlogPostService } from '@uxshop/storefront-core'
 import {
   BlogPostFields,
@@ -14,36 +13,38 @@ interface BlogPostHookParams extends Omit<BlogPostListFilter, 'page' | 'fastSear
 
 export function useBlogPosts(
   { id, slug, page, first, postCategoryId, searchTerm }: BlogPostHookParams,
-  fields?: Array<BlogPostFields>
+  fields?: BlogPostFields[]
 ): any {
-  const [blogPosts, setBlogPosts] = useState<any>()
+  function getOne(id?: string, slug?: string, fields?: BlogPostFields[]) {
+    let result = {
+      data: null,
+      error: null
+    }
 
-  async function getOne(id?: string, slug?: string, fields?: BlogPostFields[]) {
     const service = id ? BlogPostService.getById : BlogPostService.getBySlug
     const param = id ?? slug
-    const result = await service(param, fields)
-    setBlogPosts(result)
+    service(param, fields)
+      .then(reponse => (result.data = reponse))
+      .catch(error => (result.error = error))
+
+    return result
   }
 
-  async function getList(
-    filter?: BlogPostListFilter,
-    searchTerm?: string,
-    fields?: BlogPostFields[]
-  ) {
-    const fastSearch = searchTerm ? { fastSearch: { queryString: searchTerm } } : {}
-    try {
-      const result = await BlogPostService.getList({ ...filter, ...fastSearch }, fields)
-      setBlogPosts(result)
-    } catch (error) {
-      setBlogPosts(null)
+  function getList(filter?: BlogPostListFilter, searchTerm?: string, fields?: BlogPostFields[]) {
+    let result = {
+      data: null,
+      error: null
     }
+    const fastSearch = searchTerm ? { fastSearch: { queryString: searchTerm } } : {}
+
+    BlogPostService.getList({ ...filter, ...fastSearch }, fields)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
+
+    return result
   }
 
-  useEffect(() => {
-    id || slug
-      ? getOne(id, slug, fields)
-      : getList({ page, first, postCategoryId }, searchTerm, fields)
-  }, [id, slug, page, first, postCategoryId, searchTerm, fields])
-
-  return blogPosts
+  return id || slug
+    ? getOne(id, slug, fields)
+    : getList({ page, first, postCategoryId }, searchTerm, fields)
 }
