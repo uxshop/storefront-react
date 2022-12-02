@@ -44,5 +44,8 @@ export function useBlogPosts(
     return result
   }
 
-  return getList({ page, first, postCategoryId }, searchTerm, fields), getOne(id, slug, fields)
+  return {
+    getList: getList({ page, first, postCategoryId }, searchTerm, fields),
+    getOne: getOne(id, slug, fields)
+  }
 }
