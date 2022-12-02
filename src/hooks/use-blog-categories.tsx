@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { BlogCategoryService } from '@uxshop/storefront-core'
 import { BlogCategoryFields } from '@uxshop/storefront-core/dist/modules/blog/category/BlogCategoryTypes'
 
@@ -11,32 +10,33 @@ export function useBlogCategories(
   getOneFilter?: BlogCategoryHookParams,
   fields?: BlogCategoryFields[]
 ): any {
-  const [blogCategories, setBlogCategories] = useState<any>()
-  const [error, setError] = useState()
-
-  async function getOne({ id, slug }: BlogCategoryHookParams, fields?: BlogCategoryFields[]) {
-    try {
-      const service = id ? BlogCategoryService.getById : BlogCategoryService.getBySlug
-      const param = id ?? slug
-      const result = await service(param, fields)
-      setBlogCategories(result)
-    } catch (error) {
-      setError(error)
+  function getOne({ id, slug }: BlogCategoryHookParams, fields?: BlogCategoryFields[]) {
+    let result = {
+      data: null,
+      error: null
     }
+    const service = id ? BlogCategoryService.getById : BlogCategoryService.getBySlug
+    const param = id ?? slug
+
+    service(param, fields)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
+
+    return result
   }
 
-  async function getList(fields?: BlogCategoryFields[]) {
-    try {
-      const result = await BlogCategoryService.getList(fields)
-      setBlogCategories(result)
-    } catch (error) {
-      setError(error)
+  function getList(fields?: BlogCategoryFields[]) {
+    let result = {
+      data: null,
+      error: null
     }
+
+    BlogCategoryService.getList(fields)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
+
+    return result
   }
 
-  useEffect(() => {
-    getOneFilter?.id || getOneFilter?.slug ? getOne(getOneFilter, fields) : getList(fields)
-  }, [])
-
-  return { data: blogCategories, errors: error }
+  return { getOne: getOne(getOneFilter, fields), getList: getList(fields) }
 }
