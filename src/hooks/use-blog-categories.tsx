@@ -38,5 +38,5 @@ export function useBlogCategories(
     return result
   }
 
-  return { getOne: getOne(getOneFilter, fields), getList: getList(fields) }
+  return getOneFilter?.id || getOneFilter?.slug ? getOne(getOneFilter, fields) : getList(fields)
 }
