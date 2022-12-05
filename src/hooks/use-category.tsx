@@ -7,21 +7,22 @@ interface CategoryHookParams {
   slug?: string
 }
 
-export function useCategory({ id, slug }: CategoryHookParams, fields?: Array<CategoryFields>): any {
-  const [category, setCategory] = useState<any>()
+export function useCategory({ id, slug }: CategoryHookParams, fields?: CategoryFields[]): any {
+  function getOne({ id, slug }: CategoryHookParams, fields?: CategoryFields[]) {
+    let result = {
+      data: null,
+      error: null
+    }
 
-  async function getOne({ id, slug }: CategoryHookParams, fields?: Array<CategoryFields>) {
     const service = id ? CategoryService.getById : CategoryService.getBySlug
     const param = id ?? slug
 
-    const result = await service(param, fields)
+    service(param, fields)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
 
-    setCategory(result)
+    return result
   }
 
-  useEffect(() => {
-    getOne({ id, slug }, fields)
-  }, [])
-
-  return category
+  return getOne({ id, slug })
 }
