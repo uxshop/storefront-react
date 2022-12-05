@@ -7,8 +7,8 @@ interface CategoryHookParams {
   slug?: string
 }
 
-export function useCategory({ id, slug }: CategoryHookParams, fields?: Array<CategoryFields>): any {
-  function getOne({ id, slug }: CategoryHookParams, fields?: Array<CategoryFields>) {
+export function useCategory({ id, slug }: CategoryHookParams, fields?: CategoryFields[]): any {
+  function getOne({ id, slug }: CategoryHookParams, fields?: CategoryFields[]) {
     let result = {
       data: null,
       error: null
