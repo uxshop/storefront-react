@@ -1,18 +1,17 @@
-import { useEffect, useState } from 'react'
 import { CategoryService } from '@uxshop/storefront-core'
 import { CategoryTreeFields } from '@uxshop/storefront-core/dist/modules/category/CategoryTypes'
 
-export function useCategoryTree(fields?: Array<CategoryTreeFields>) {
-  const [categoryTree, setCategoryTree] = useState<any>()
+export function useCategoryTree(fields?: CategoryTreeFields[]) {
+  function get(fields?: CategoryTreeFields[]) {
+    let result = {
+      data: null,
+      error: null
+    }
+    CategoryService.getTree(fields)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
 
-  async function get(fields?: Array<CategoryTreeFields>) {
-    const result = await CategoryService.getTree(fields)
-    setCategoryTree(result)
+    return result
   }
-
-  useEffect(() => {
-    get(fields)
-  }, [])
-
-  return categoryTree
+  return get(fields)
 }
