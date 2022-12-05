@@ -5,8 +5,8 @@ interface MenuHookParams {
   id?: string
 }
 
-export function useMenus({ id }: MenuHookParams, fields?: Array<MenuFields>): any {
-  function getOneById(id: string, fields?: Array<MenuFields>) {
+export function useMenus({ id }: MenuHookParams, fields?: MenuFields[]): any {
+  function getOneById(id: string, fields?: MenuFields[]) {
     let result = {
       data: null,
       error: null
@@ -19,7 +19,7 @@ export function useMenus({ id }: MenuHookParams, fields?: Array<MenuFields>): an
     return result
   }
 
-  function getList(fields?: Array<MenuFields>) {
+  function getList(fields?: MenuFields[]) {
     let result = {
       data: null,
       error: null
