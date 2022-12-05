@@ -8,7 +8,7 @@ interface LandingPagesHooksParams {
 
 export function useLandingPages(
   { id, slug }: LandingPagesHooksParams,
-  fields?: Array<LandingPageFields>
+  fields?: LandingPageFields[]
 ): any {
   const urlParams = new URLSearchParams(window.location.search)
   const hashPreview = urlParams.get('preview')
@@ -18,7 +18,7 @@ export function useLandingPages(
     error: null
   }
 
-  function getOne({ id, slug }: LandingPagesHooksParams, fields?: Array<LandingPageFields>) {
+  function getOne({ id, slug }: LandingPagesHooksParams, fields?: LandingPageFields[]) {
     const service = id ? LandingPagesService.getById : LandingPagesService.getBySlug
     const param = id ?? slug
 
