@@ -16,9 +16,9 @@ interface GetOneParams extends Omit<ProductHookParams, 'pagination'> {}
 
 export function useProducts(
   { productId, slug, agg, filter }: ProductHookParams,
-  fields?: Array<ProductFields>
+  fields?: ProductFields[]
 ): any {
-  function getOne({ productId, slug }: GetOneParams, fields?: Array<ProductFields>) {
+  function getOne({ productId, slug }: GetOneParams, fields?: ProductFields[]) {
     let result = {
       data: null,
       error: null
@@ -32,7 +32,7 @@ export function useProducts(
     return result
   }
 
-  function getList(filter?: ProductListFilter, agg?: Aggregator, fields?: Array<ProductFields>) {
+  function getList(filter?: ProductListFilter, agg?: Aggregator, fields?: ProductFields[]) {
     let result = {
       data: null,
       error: null
