@@ -5,11 +5,8 @@ interface ScriptsHookParam {
   location?: string
 }
 
-export function useScripts(
-  { page, location }: ScriptsHookParam,
-  fields?: Array<ScriptFields>
-): any {
-  function getScriptsByFilter({ page, location }: ScriptsHookParam, fields?: Array<ScriptFields>) {
+export function useScripts({ page, location }: ScriptsHookParam, fields?: ScriptFields[]): any {
+  function getScriptsByFilter({ page, location }: ScriptsHookParam, fields?: ScriptFields[]) {
     let result = {
       data: null,
       error: null
@@ -25,7 +22,7 @@ export function useScripts(
     return result
   }
 
-  function getAllScripts(fields?: Array<ScriptFields>) {
+  function getAllScripts(fields?: ScriptFields[]) {
     let result = {
       data: null,
       error: null
