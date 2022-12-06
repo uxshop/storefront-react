@@ -6,7 +6,7 @@ interface AppHookParams {
 }
 
 export function useApps({ id }: AppHookParams, fields?: AppFields[]): any {
-  function getById({ id }: AppHookParams, fields?: AppFields[]) {
+  function getById() {
     let result = {
       data: null,
       error: null
@@ -18,5 +18,5 @@ export function useApps({ id }: AppHookParams, fields?: AppFields[]): any {
     return result
   }
 
-  return getById({ id }, fields)
+  return getById()
 }
