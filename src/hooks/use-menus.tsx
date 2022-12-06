@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { MenuService } from '@uxshop/storefront-core'
 import { MenuFields } from '@uxshop/storefront-core/dist/modules/menu/MenuTypes'
 
@@ -6,22 +6,31 @@ interface MenuHookParams {
   id?: string
 }
 
-export function useMenus({ id }: MenuHookParams, fields?: Array<MenuFields>): any {
-  const [menus, setMenus] = useState<any>()
-
-  async function getOneById(id: string, fields?: Array<MenuFields>) {
-    const result = await MenuService.getById(id, fields)
-    setMenus(result)
+export function useMenus({ id }: MenuHookParams, fields?: MenuFields[]): any {
+  let result = {
+    data: null,
+    error: null
   }
 
-  async function getList(fields?: Array<MenuFields>) {
-    const result = await MenuService.getList(fields)
-    setMenus(result)
+  function getOneById() {
+    MenuService.getById(id, fields)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
+
+    return result
+  }
+
+  function getList() {
+    MenuService.getList(fields)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
+
+    return result
   }
 
   useEffect(() => {
-    id ? getOneById(id, fields) : getList(fields)
+    id ? getOneById() : getList()
   }, [id])
 
-  return menus
+  return result
 }
