@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { PagesService } from '@uxshop/storefront-core'
 import { PageFields } from '@uxshop/storefront-core/dist/modules/pages/PageTypes'
 
@@ -7,24 +6,35 @@ interface PageHookParams {
   slug?: string
 }
 
-export function usePages({ id, slug }: PageHookParams, fields?: Array<PageFields>): any {
-  const [pages, setPages] = useState<any>()
+export function usePages({ id, slug }: PageHookParams, fields?: PageFields[]): any {
+  function getOne() {
+    let result = {
+      data: null,
+      error: null
+    }
 
-  async function getOne({ id, slug }: PageHookParams, fields?: Array<PageFields>) {
     const service = id ? PagesService.getById : PagesService.getBySlug
     const param = id ?? slug
-    const result = await service(param, fields)
-    setPages(result)
+
+    service(param, fields)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
+
+    return result
   }
 
-  async function getList(fields?: Array<PageFields>) {
-    const result = await PagesService.getList(fields)
-    setPages(result)
+  function getList() {
+    let result = {
+      data: null,
+      error: null
+    }
+
+    PagesService.getList(fields)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
+
+    return result
   }
 
-  useEffect(() => {
-    id || slug ? getOne({ id, slug }, fields) : getList(fields)
-  }, [])
-
-  return pages
+  return id || slug ? getOne() : getList()
 }
