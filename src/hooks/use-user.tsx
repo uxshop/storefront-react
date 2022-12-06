@@ -17,7 +17,7 @@ export function useUser(credentials: LoginCredentials): UserHook {
     setToken(tokenExists)
     get(tokenExists)
   } else {
-    credentials && auth(credentials)
+    credentials && auth()
   }
 
   function setToken(token: string) {
@@ -46,7 +46,7 @@ export function useUser(credentials: LoginCredentials): UserHook {
     return { data: result.data, error: result.error }
   }
 
-  function auth(credentials: LoginCredentials, fields?: UserFields[]): any {
+  function auth(): any {
     let result = {
       data: null,
       error: null
@@ -64,5 +64,5 @@ export function useUser(credentials: LoginCredentials): UserHook {
     return result
   }
 
-  return tokenExists ? get(tokenExists) : auth(credentials)
+  return tokenExists ? get(tokenExists) : auth()
 }
