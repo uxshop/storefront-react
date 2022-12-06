@@ -10,13 +10,13 @@ export function useBlogCategories(
   getOneFilter?: BlogCategoryHookParams,
   fields?: BlogCategoryFields[]
 ): any {
-  function getOne({ id, slug }: BlogCategoryHookParams, fields?: BlogCategoryFields[]) {
+  function getOne() {
     let result = {
       data: null,
       error: null
     }
-    const service = id ? BlogCategoryService.getById : BlogCategoryService.getBySlug
-    const param = id ?? slug
+    const service = getOneFilter.id ? BlogCategoryService.getById : BlogCategoryService.getBySlug
+    const param = getOneFilter.id ?? getOneFilter.slug
 
     service(param, fields)
       .then(response => (result.data = response))
@@ -25,7 +25,7 @@ export function useBlogCategories(
     return result
   }
 
-  function getList(fields?: BlogCategoryFields[]) {
+  function getList() {
     let result = {
       data: null,
       error: null
@@ -38,5 +38,5 @@ export function useBlogCategories(
     return result
   }
 
-  return getOneFilter?.id || getOneFilter?.slug ? getOne(getOneFilter, fields) : getList(fields)
+  return getOneFilter?.id || getOneFilter?.slug ? getOne() : getList()
 }
