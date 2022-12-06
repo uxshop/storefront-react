@@ -1,14 +1,19 @@
-import { useState } from 'react'
 import { NewsletterService } from '@uxshop/storefront-core'
 import { NewsletterInput } from '@uxshop/storefront-core/dist/modules/newsletter/NewsletterTypes'
 
-export function useNewsletter(): any {
-  const [newsletter, setNewsletter] = useState<any>(null)
+export function useNewsletter(userData: NewsletterInput): any {
+  function subscribe() {
+    let result = {
+      data: null,
+      error: null
+    }
 
-  async function subscribe(userData: NewsletterInput) {
-    const result = await NewsletterService.subscribe(userData)
-    setNewsletter(result)
+    NewsletterService.subscribe(userData)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
+
+    return result
   }
 
-  return { newsletter, subscribe }
+  return subscribe()
 }
