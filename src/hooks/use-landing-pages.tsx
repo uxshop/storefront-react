@@ -18,7 +18,7 @@ export function useLandingPages(
     error: null
   }
 
-  function getOne({ id, slug }: LandingPagesHooksParams, fields?: LandingPageFields[]) {
+  function getOne() {
     const service = id ? LandingPagesService.getById : LandingPagesService.getBySlug
     const param = id ?? slug
 
@@ -39,5 +39,5 @@ export function useLandingPages(
     }
   }
 
-  return getOne({ id: id, slug: slug }, fields)
+  return getOne()
 }
