@@ -1,6 +1,6 @@
+import { useEffect } from 'react'
 import { MenuService } from '@uxshop/storefront-core'
 import { MenuFields } from '@uxshop/storefront-core/dist/modules/menu/MenuTypes'
-import { useEffect } from 'react'
 
 interface MenuHookParams {
   id?: string
