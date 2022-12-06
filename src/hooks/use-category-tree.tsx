@@ -2,7 +2,7 @@ import { CategoryService } from '@uxshop/storefront-core'
 import { CategoryTreeFields } from '@uxshop/storefront-core/dist/modules/category/CategoryTypes'
 
 export function useCategoryTree(fields?: CategoryTreeFields[]) {
-  function get(fields?: CategoryTreeFields[]) {
+  function get() {
     let result = {
       data: null,
       error: null
@@ -13,5 +13,5 @@ export function useCategoryTree(fields?: CategoryTreeFields[]) {
 
     return result
   }
-  return get(fields)
+  return get()
 }
