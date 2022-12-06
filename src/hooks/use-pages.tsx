@@ -7,7 +7,7 @@ interface PageHookParams {
 }
 
 export function usePages({ id, slug }: PageHookParams, fields?: PageFields[]): any {
-  function getOne({ id, slug }: PageHookParams, fields?: PageFields[]) {
+  function getOne() {
     let result = {
       data: null,
       error: null
@@ -23,7 +23,7 @@ export function usePages({ id, slug }: PageHookParams, fields?: PageFields[]): a
     return result
   }
 
-  function getList(fields?: PageFields[]) {
+  function getList() {
     let result = {
       data: null,
       error: null
@@ -36,5 +36,5 @@ export function usePages({ id, slug }: PageHookParams, fields?: PageFields[]): a
     return result
   }
 
-  return id || slug ? getOne({ id, slug }, fields) : getList(fields)
+  return id || slug ? getOne() : getList()
 }
