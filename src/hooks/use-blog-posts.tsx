@@ -3,6 +3,7 @@ import {
   BlogPostFields,
   BlogPostListFilter
 } from '@uxshop/storefront-core/dist/modules/blog/post/BlogPostTypes'
+import { useEffect } from 'react'
 
 interface BlogPostHookParams extends Omit<BlogPostListFilter, 'page' | 'fastSearch'> {
   page?: number
@@ -15,12 +16,12 @@ export function useBlogPosts(
   { id, slug, page, first, postCategoryId, searchTerm }: BlogPostHookParams,
   fields?: BlogPostFields[]
 ): any {
-  function getOne(id?: string, slug?: string, fields?: BlogPostFields[]) {
-    let result = {
-      data: null,
-      error: null
-    }
+  let result = {
+    data: null,
+    error: null
+  }
 
+  function getOne() {
     const service = id ? BlogPostService.getById : BlogPostService.getBySlug
     const param = id ?? slug
     service(param, fields)
@@ -30,11 +31,8 @@ export function useBlogPosts(
     return result
   }
 
-  function getList(filter?: BlogPostListFilter, searchTerm?: string, fields?: BlogPostFields[]) {
-    let result = {
-      data: null,
-      error: null
-    }
+  function getList() {
+    const filter = { page, first, postCategoryId }
     const fastSearch = searchTerm ? { fastSearch: { queryString: searchTerm } } : {}
 
     BlogPostService.getList({ ...filter, ...fastSearch }, fields)
@@ -44,7 +42,9 @@ export function useBlogPosts(
     return result
   }
 
-  return id || slug
-    ? getOne(id, slug, fields)
-    : getList({ page, first, postCategoryId }, searchTerm, fields)
+  useEffect(() => {
+    id || slug ? getOne() : getList()
+  }, [id, slug, page, first, postCategoryId, searchTerm, fields])
+
+  return result
 }
