@@ -12,7 +12,7 @@ export function useMenus({ id }: MenuHookParams, fields?: MenuFields[]): any {
     error: null
   }
 
-  function getOneById(id: string, fields?: MenuFields[]) {
+  function getOneById() {
     MenuService.getById(id, fields)
       .then(response => (result.data = response))
       .catch(error => (result.error = error))
@@ -20,7 +20,7 @@ export function useMenus({ id }: MenuHookParams, fields?: MenuFields[]): any {
     return result
   }
 
-  function getList(fields?: MenuFields[]) {
+  function getList() {
     MenuService.getList(fields)
       .then(response => (result.data = response))
       .catch(error => (result.error = error))
@@ -29,7 +29,7 @@ export function useMenus({ id }: MenuHookParams, fields?: MenuFields[]): any {
   }
 
   useEffect(() => {
-    id ? getOneById(id, fields) : getList(fields)
+    id ? getOneById() : getList()
   }, [id])
 
   return result
