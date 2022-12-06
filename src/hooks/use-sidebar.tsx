@@ -1,5 +1,6 @@
-import { SidebarService } from '@uxshop/storefront-core'
 import { useEffect } from 'react'
+import { SidebarService } from '@uxshop/storefront-core'
+
 interface SidebarHookParams {
   id: number
   type: string
