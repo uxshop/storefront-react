@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { SidebarService } from '@uxshop/storefront-core'
+
 interface SidebarHookParams {
   id: number
   type: string
@@ -7,16 +8,20 @@ interface SidebarHookParams {
 }
 
 export function useSidebar(sidebarFilter?: Array<SidebarHookParams>): any {
-  const [sidebar, setSidebar] = useState<any>()
-
-  async function get(sidebarFilter?: Array<SidebarHookParams>) {
-    const result = await SidebarService.get(sidebarFilter)
-    setSidebar(result)
+  let result = {
+    data: null,
+    error: null
   }
 
-  useEffect(() => {
-    get(sidebarFilter)
-  }, [sidebarFilter])
+  function get() {
+    SidebarService.get(sidebarFilter)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
 
-  return sidebar
+    return result
+  }
+  useEffect(() => {
+    get()
+  }, [sidebarFilter])
+  return result
 }
