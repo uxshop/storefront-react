@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { ScriptsService } from '@uxshop/storefront-core'
 import { ScriptFields } from '@uxshop/storefront-core/dist/modules/scripts/ScriptsTypes'
 interface ScriptsHookParam {
@@ -6,31 +5,35 @@ interface ScriptsHookParam {
   location?: string
 }
 
-export function useScripts(
-  { page, location }: ScriptsHookParam,
-  fields?: Array<ScriptFields>
-): any {
-  const [scripts, setScripts] = useState<any>()
+export function useScripts({ page, location }: ScriptsHookParam, fields?: ScriptFields[]): any {
+  function getScriptsByFilter() {
+    let result = {
+      data: null,
+      error: null
+    }
 
-  async function getScriptsByFilter(
-    { page, location }: ScriptsHookParam,
-    fields?: Array<ScriptFields>
-  ) {
     const service = page ? ScriptsService.getListByPage : ScriptsService.getListByLocation
     const param = page ?? location
 
-    const result = await service(param, fields)
-    setScripts(result)
+    service(param, fields)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
+
+    return result
   }
 
-  async function getAllScripts(fields?: Array<ScriptFields>) {
-    const result = await ScriptsService.getList(fields)
-    setScripts(result)
+  function getAllScripts() {
+    let result = {
+      data: null,
+      error: null
+    }
+
+    ScriptsService.getList(fields)
+      .then(response => (result.data = response))
+      .catch(error => (result.error = error))
+
+    return result
   }
 
-  useEffect(() => {
-    page || location ? getScriptsByFilter({ page, location }, fields) : getAllScripts(fields)
-  }, [])
-
-  return scripts
+  return page || location ? getScriptsByFilter() : getAllScripts()
 }
