@@ -18,7 +18,7 @@ export function useProducts(
   { productId, slug, agg, filter }: ProductHookParams,
   fields?: ProductFields[]
 ): any {
-  function getOne({ productId, slug }: GetOneParams, fields?: ProductFields[]) {
+  function getOne() {
     let result = {
       data: null,
       error: null
@@ -32,7 +32,7 @@ export function useProducts(
     return result
   }
 
-  function getList(filter?: ProductListFilter, agg?: Aggregator, fields?: ProductFields[]) {
+  function getList() {
     let result = {
       data: null,
       error: null
@@ -44,5 +44,5 @@ export function useProducts(
     return result
   }
 
-  return productId || slug ? getOne({ productId, slug }, fields) : getList(filter, agg, fields)
+  return productId || slug ? getOne() : getList()
 }
