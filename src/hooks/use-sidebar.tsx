@@ -12,7 +12,7 @@ export function useSidebar(sidebarFilter?: Array<SidebarHookParams>): any {
     error: null
   }
 
-  function get(sidebarFilter?: Array<SidebarHookParams>) {
+  function get() {
     SidebarService.get(sidebarFilter)
       .then(response => (result.data = response))
       .catch(error => (result.error = error))
@@ -20,7 +20,7 @@ export function useSidebar(sidebarFilter?: Array<SidebarHookParams>): any {
     return result
   }
   useEffect(() => {
-    get(sidebarFilter)
+    get()
   }, [sidebarFilter])
   return result
 }
