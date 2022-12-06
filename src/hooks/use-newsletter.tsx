@@ -2,7 +2,7 @@ import { NewsletterService } from '@uxshop/storefront-core'
 import { NewsletterInput } from '@uxshop/storefront-core/dist/modules/newsletter/NewsletterTypes'
 
 export function useNewsletter(userData: NewsletterInput): any {
-  function subscribe(userData: NewsletterInput) {
+  function subscribe() {
     let result = {
       data: null,
       error: null
@@ -15,5 +15,5 @@ export function useNewsletter(userData: NewsletterInput): any {
     return result
   }
 
-  return subscribe(userData)
+  return subscribe()
 }
