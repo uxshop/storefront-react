@@ -7,17 +7,17 @@ interface PageHookParams {
   slug?: string
 }
 
-export function usePages({ id, slug }: PageHookParams, fields?: PageFields[]): any {
+export function usePages({ id, slug }: PageHookParams, fields?: Array<PageFields>): any {
   const [pages, setPages] = useState<any>()
 
-  async function getOne({ id, slug }: PageHookParams, fields?: PageFields[]) {
+  async function getOne({ id, slug }: PageHookParams, fields?: Array<PageFields>) {
     const service = id ? PagesService.getById : PagesService.getBySlug
     const param = id ?? slug
     const result = await service(param, fields)
     setPages(result)
   }
 
-  async function getList(fields?: PageFields[]) {
+  async function getList(fields?: Array<PageFields>) {
     const result = await PagesService.getList(fields)
     setPages(result)
   }
