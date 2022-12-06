@@ -15,7 +15,7 @@ interface FreightData {
 }
 
 export function useFreights(params: FreightHookParams, fields?: FreightFields[]): FreightData {
-  function getList(params: FreightHookParams, fields?: FreightFields[]) {
+  function getList() {
     let result = {
       data: null,
       error: null
@@ -29,5 +29,5 @@ export function useFreights(params: FreightHookParams, fields?: FreightFields[])
     return result
   }
 
-  return getList(params, fields)
+  return getList()
 }
