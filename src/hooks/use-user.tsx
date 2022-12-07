@@ -13,17 +13,11 @@ const COOKIE_USER = '_dc_token'
 
 export function useUser(credentials: LoginCredentials): UserHook {
   const tokenExists = CookieService.getCookie(COOKIE_USER)
-  if (tokenExists) {
-    setToken(tokenExists)
-    get(tokenExists)
-  } else {
-    credentials && auth()
-  }
+  tokenExists ? (setToken(tokenExists), get(tokenExists)) : credentials && auth()
 
   function setToken(token: string) {
-    if (token) {
-      CookieService.setCookie(COOKIE_USER, token, 7)
-    }
+    if (!token) return
+    CookieService.setCookie(COOKIE_USER, token, 7)
   }
 
   function setUserData(user: User) {
