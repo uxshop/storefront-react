@@ -3,7 +3,6 @@ import {
   BlogPostFields,
   BlogPostListFilter
 } from '@uxshop/storefront-core/dist/modules/blog/post/BlogPostTypes'
-import { useEffect } from 'react'
 
 interface BlogPostHookParams extends Omit<BlogPostListFilter, 'page' | 'fastSearch'> {
   page?: number
@@ -16,12 +15,12 @@ export function useBlogPosts(
   { id, slug, page, first, postCategoryId, searchTerm }: BlogPostHookParams,
   fields?: BlogPostFields[]
 ): any {
-  let result = {
-    data: null,
-    error: null
-  }
-
   function getOne() {
+    let result = {
+      data: null,
+      error: null
+    }
+
     const service = id ? BlogPostService.getById : BlogPostService.getBySlug
     const param = id ?? slug
     service(param, fields)
@@ -32,6 +31,11 @@ export function useBlogPosts(
   }
 
   function getList() {
+    let result = {
+      data: null,
+      error: null
+    }
+
     const filter = { page, first, postCategoryId }
     const fastSearch = searchTerm ? { fastSearch: { queryString: searchTerm } } : {}
 
@@ -42,9 +46,5 @@ export function useBlogPosts(
     return result
   }
 
-  useEffect(() => {
-    id || slug ? getOne() : getList()
-  }, [id, slug, page, first, postCategoryId, searchTerm, fields])
-
-  return result
+  return id || slug ? getOne() : getList()
 }
