@@ -8,7 +8,7 @@ interface CategoryHookParams {
 }
 
 export function useCategory({ id, slug }: CategoryHookParams, fields?: CategoryFields[]): any {
-  function getOne({ id, slug }: CategoryHookParams, fields?: CategoryFields[]) {
+  function getOne() {
     let result = {
       data: null,
       error: null
@@ -24,5 +24,5 @@ export function useCategory({ id, slug }: CategoryHookParams, fields?: CategoryF
     return result
   }
 
-  return getOne({ id, slug })
+  return getOne()
 }
