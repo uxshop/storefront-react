@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { FreightService } from '@uxshop/storefront-core'
 import {
   Freight,
@@ -15,11 +15,12 @@ interface FreightData {
 }
 
 export function useFreights(params: FreightHookParams, fields?: FreightFields[]): FreightData {
+  let result = {
+    data: null,
+    error: null
+  }
+
   function getList() {
-    let result = {
-      data: null,
-      error: null
-    }
     const service = params.variationId && params.zipCode && FreightService.getList
 
     service(params, fields)
@@ -29,5 +30,9 @@ export function useFreights(params: FreightHookParams, fields?: FreightFields[])
     return result
   }
 
-  return getList()
+  useEffect(() => {
+    getList()
+  }, [params.variationId, params.zipCode, params.components])
+
+  return result
 }
