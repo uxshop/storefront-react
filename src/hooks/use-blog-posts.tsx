@@ -15,7 +15,7 @@ export function useBlogPosts(
   { id, slug, page, first, postCategoryId, searchTerm }: BlogPostHookParams,
   fields?: BlogPostFields[]
 ): any {
-  function getOne(id?: string, slug?: string, fields?: BlogPostFields[]) {
+  function getOne() {
     let result = {
       data: null,
       error: null
@@ -30,11 +30,13 @@ export function useBlogPosts(
     return result
   }
 
-  function getList(filter?: BlogPostListFilter, searchTerm?: string, fields?: BlogPostFields[]) {
+  function getList() {
     let result = {
       data: null,
       error: null
     }
+
+    const filter = { page, first, postCategoryId }
     const fastSearch = searchTerm ? { fastSearch: { queryString: searchTerm } } : {}
 
     BlogPostService.getList({ ...filter, ...fastSearch }, fields)
@@ -44,7 +46,5 @@ export function useBlogPosts(
     return result
   }
 
-  return id || slug
-    ? getOne(id, slug, fields)
-    : getList({ page, first, postCategoryId }, searchTerm, fields)
+  return id || slug ? getOne() : getList()
 }
