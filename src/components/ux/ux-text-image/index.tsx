@@ -9,7 +9,7 @@ export function UxTextImage({ settings }: UxTextImageProps) {
     'data-image': settings.image,
     'data-button-href': settings.buttonHref,
     'data-button-label': settings.buttonLabel,
-    side: settings.side
+    'data-position': settings.position
   }
 
   defineUxTextImage()
