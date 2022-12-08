@@ -1,22 +1,26 @@
 import { AppService } from '@uxshop/storefront-core'
 import { AppFields } from '@uxshop/storefront-core/dist/modules/app/AppTypes'
+import { useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 
 interface AppHookParams {
   id: string
 }
 
 export function useApps({ id }: AppHookParams, fields?: AppFields[]): any {
+  const [status, setStatus] = useState<HookData>({
+    loading: false,
+    data: null
+  })
+
   function getById({ id }: AppHookParams, fields?: AppFields[]) {
-    let result = {
-      data: null,
-      error: null
-    }
+    setStatus({ loading: true })
     AppService.getById(id, fields)
-      .then(response => (result.data = response))
-      .catch(error => (result.error = error))
-
-    return result
+      .then(response => setStatus({ loading: false, data: response }))
+      .catch(error => setStatus({ loading: false, error }))
   }
-
-  return getById({ id }, fields)
+  useEffect(() => {
+    getById({ id })
+  }, [])
+  return { ...status }
 }
