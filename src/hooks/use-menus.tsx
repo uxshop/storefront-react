@@ -13,14 +13,14 @@ export function useMenus({ id }: MenuHookParams, fields?: MenuFields[]): HookDat
   })
 
   function getOneById() {
-    setStatus({ loading: true })
+    setStatus(state => ({ ...state, loading: true }))
     MenuService.getById(id, fields)
       .then(response => setStatus({ loading: false, data: response }))
       .catch(error => setStatus({ loading: false, error }))
   }
 
   function getList() {
-    setStatus({ loading: true })
+    setStatus(state => ({ ...state, loading: true }))
     MenuService.getList(fields)
       .then(response => setStatus({ loading: false, data: response }))
       .catch(error => setStatus({ loading: false, error }))
