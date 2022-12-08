@@ -1,7 +1,7 @@
 export interface UxVideoSettings {
+  url: string
   title?: string
   description?: string
-  url: string
 }
 
 export interface UxVideoProps {
