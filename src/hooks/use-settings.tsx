@@ -1,21 +1,27 @@
 import { useEffect, useState } from 'react'
 import { SettingsService, Socket } from '@uxshop/storefront-core'
 import { SettingFilter } from '@uxshop/storefront-core/dist/modules/settings/SettingsTypes'
+import { HookData } from './types/HookData'
 
-export function useSettings(filter: SettingFilter): any {
+export function useSettings(filter: SettingFilter): HookData {
   const urlParams = new URLSearchParams(window.location.search)
   const hashPreview = urlParams.get('preview')
-  const [settings, setSettings] = useState<any>()
+  const [status, setStatus] = useState<HookData>({
+    loading: false
+  })
 
   async function getSettings() {
-    const result = await SettingsService.getOne(filter)
-
-    setSettings(result.data)
+    setStatus({ loading: true })
+    SettingsService.getOne(filter)
+      .then(response => {
+        setStatus({ loading: false, data: response })
+      })
+      .catch(error => setStatus({ loading: false, error }))
   }
 
   function onUpdate({ data }: any) {
     if (data) {
-      setSettings(data?.settings)
+      setStatus({ loading: false, data })
     }
   }
 
@@ -26,5 +32,5 @@ export function useSettings(filter: SettingFilter): any {
     }
   }, [])
 
-  return settings
+  return { ...status }
 }

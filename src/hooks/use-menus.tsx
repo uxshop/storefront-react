@@ -1,36 +1,34 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { MenuService } from '@uxshop/storefront-core'
 import { MenuFields } from '@uxshop/storefront-core/dist/modules/menu/MenuTypes'
+import { HookData } from './types/HookData'
 
 interface MenuHookParams {
   id?: string
 }
 
-export function useMenus({ id }: MenuHookParams, fields?: MenuFields[]): any {
-  let result = {
-    data: null,
-    error: null
-  }
+export function useMenus({ id }: MenuHookParams, fields?: MenuFields[]): HookData {
+  const [status, setStatus] = useState<HookData>({
+    loading: false
+  })
 
   function getOneById() {
+    setStatus({ loading: true })
     MenuService.getById(id, fields)
-      .then(response => (result.data = response))
-      .catch(error => (result.error = error))
-
-    return result
+      .then(response => setStatus({ loading: false, data: response }))
+      .catch(error => setStatus({ loading: false, error }))
   }
 
   function getList() {
+    setStatus({ loading: true })
     MenuService.getList(fields)
-      .then(response => (result.data = response))
-      .catch(error => (result.error = error))
-
-    return result
+      .then(response => setStatus({ loading: false, data: response }))
+      .catch(error => setStatus({ loading: false, error }))
   }
 
   useEffect(() => {
     id ? getOneById() : getList()
   }, [id])
 
-  return result
+  return { ...status }
 }
