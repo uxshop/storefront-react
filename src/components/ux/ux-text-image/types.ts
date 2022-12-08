@@ -4,7 +4,7 @@ export interface UxTextImageSettings {
   image?: string
   buttonLabel?: string
   buttonHref?: string
-  side?: 'right' | 'left'
+  position?: 'right' | 'left'
 }
 
 export interface UxTextImageProps {
