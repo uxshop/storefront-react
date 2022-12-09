@@ -4,6 +4,8 @@ import {
   ProductListFilter,
   Aggregator
 } from '@uxshop/storefront-core/dist/modules/product/ProductTypes'
+import { useCallback, useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 
 interface ProductHookParams {
   productId?: string
@@ -12,37 +14,35 @@ interface ProductHookParams {
   agg?: Aggregator
 }
 
-interface GetOneParams extends Omit<ProductHookParams, 'pagination'> {}
-
 export function useProducts(
   { productId, slug, agg, filter }: ProductHookParams,
   fields?: ProductFields[]
-): any {
-  function getOne() {
-    let result = {
-      data: null,
-      error: null
-    }
+): HookData {
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
+  })
+
+  const getOne = useCallback(() => {
+    setState(state => ({ ...state, loading: true }))
     const service = productId ? ProductService.getById : ProductService.getBySlug
     const param = productId ?? slug
     service(param, fields)
-      .then(response => (result.data = response))
-      .catch(error => (result.error = error))
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
+  }, [productId, slug])
 
-    return result
-  }
-
-  function getList() {
-    let result = {
-      data: null,
-      error: null
-    }
+  const getList = useCallback(() => {
+    setState(state => ({ ...state, loading: true }))
     ProductService.getList({ filter, agg, fields })
-      .then(response => (result.data = response))
-      .catch(error => (result.error = error))
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
+  }, [filter, agg])
 
-    return result
-  }
+  useEffect(() => {
+    productId || slug ? getOne() : getList()
+  }, [])
 
-  return productId || slug ? getOne() : getList()
+  return { ...state }
 }

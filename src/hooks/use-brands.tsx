@@ -15,37 +15,35 @@ interface GetOneParams {
   slug?: string
 }
 
-export function useBrands(
-  { id, slug, pagination }: BrandHookParams,
-  fields?: Array<BrandFields>
-): any {
-  const [status, setStatus] = useState<HookData>({
+export function useBrands({ id, slug, pagination }: BrandHookParams, fields?: BrandFields[]) {
+  const [state, setState] = useState<HookData>({
     loading: false,
-    data: null
+    data: null,
+    error: null
   })
 
   function getOne({ id, slug }: GetOneParams, fields?: BrandFields[]) {
-    setStatus({ loading: true })
+    setState(state => ({ ...state, loading: true }))
 
     const service = id ? BrandService.getById : BrandService.getBySlug
     const param = id ?? slug
 
     service(param, fields)
-      .then(response => setStatus({ loading: false, data: response }))
-      .catch(error => setStatus({ loading: false, error }))
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
 
   function getList(pagination?: PaginationFilter, fields?: BrandFields[]) {
-    setStatus({ loading: true })
+    setState(state => ({ ...state, loading: true }))
 
     BrandService.getList(pagination, fields)
-      .then(response => setStatus({ loading: false, data: response }))
-      .catch(error => setStatus({ loading: false, error }))
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
 
   useEffect(() => {
     id || slug ? getOne({ id: id, slug: slug }, fields) : getList(pagination, fields)
   }, [])
 
-  return { ...status }
+  return { ...state }
 }

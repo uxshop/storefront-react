@@ -11,29 +11,30 @@ interface BlogCategoryHookParams {
 export function useBlogCategories(
   getOneFilter?: BlogCategoryHookParams,
   fields?: BlogCategoryFields[]
-): any {
-  const [status, setStatus] = useState<HookData>({
+) {
+  const [status, setState] = useState<HookData>({
     loading: false,
-    data: null
+    data: null,
+    error: null
   })
 
   function getOne() {
-    setStatus({ loading: true })
+    setState(state => ({ ...state, loading: true }))
 
     const service = getOneFilter.id ? BlogCategoryService.getById : BlogCategoryService.getBySlug
     const param = getOneFilter.id ?? getOneFilter.slug
 
     service(param, fields)
-      .then(response => setStatus({ loading: false, data: response }))
-      .catch(error => setStatus({ loading: false, error }))
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
 
   function getList() {
-    setStatus({ loading: true })
+    setState(state => ({ ...state, loading: true }))
 
     BlogCategoryService.getList(fields)
-      .then(response => setStatus({ loading: false, data: response }))
-      .catch(error => setStatus({ loading: false, error }))
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
   useEffect(() => {
     getOneFilter?.id || getOneFilter?.slug ? getOne() : getList()

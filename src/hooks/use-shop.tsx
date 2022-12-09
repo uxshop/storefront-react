@@ -1,24 +1,24 @@
 import { ShopService } from '@uxshop/storefront-core'
-import { stat } from 'fs'
 import { useEffect, useState } from 'react'
 import { HookData } from './types/HookData'
 
 export function useShop(): HookData {
-  const [status, setStatus] = useState<HookData>({
+  const [state, setState] = useState<HookData>({
     loading: false,
-    data: null
+    data: null,
+    error: null
   })
 
   function getShop() {
-    setStatus({ loading: true })
+    setState(state => ({ ...state, loading: true }))
     ShopService.getShop()
-      .then(response => setStatus({ loading: false, data: response }))
-      .catch(error => setStatus({ loading: false, error }))
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
 
   useEffect(() => {
     getShop()
   }, [])
 
-  return { ...status }
+  return { ...state }
 }

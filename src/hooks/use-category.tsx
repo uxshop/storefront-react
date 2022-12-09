@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { CategoryService } from '@uxshop/storefront-core'
 import { CategoryFields } from '@uxshop/storefront-core/dist/modules/category/CategoryTypes'
+import { HookData } from './types/HookData'
 
 interface CategoryHookParams {
   id?: string
@@ -8,21 +9,25 @@ interface CategoryHookParams {
 }
 
 export function useCategory({ id, slug }: CategoryHookParams, fields?: CategoryFields[]): any {
-  function getOne() {
-    let result = {
-      data: null,
-      error: null
-    }
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
+  })
 
+  function getOne() {
     const service = id ? CategoryService.getById : CategoryService.getBySlug
     const param = id ?? slug
 
+    setState(state => ({ ...state, loading: true }))
     service(param, fields)
-      .then(response => (result.data = response))
-      .catch(error => (result.error = error))
-
-    return result
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
 
-  return getOne()
+  useEffect(() => {
+    getOne()
+  }, [])
+
+  return { ...state }
 }
