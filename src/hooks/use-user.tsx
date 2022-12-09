@@ -4,14 +4,22 @@ import {
   LoginCredentials,
   UserFields
 } from '@uxshop/storefront-core/dist/modules/user/UserTypes'
+import { useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 interface UserHook {
-  result: any
+  state: HookData
   auth: (credentials: LoginCredentials) => Promise<any>
 }
 
 const COOKIE_USER = '_dc_token'
 
 export function useUser(credentials: LoginCredentials): UserHook {
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
+  })
+
   const tokenExists = CookieService.getCookie(COOKIE_USER)
   tokenExists ? (setToken(tokenExists), get(tokenExists)) : credentials && auth()
 
@@ -25,38 +33,32 @@ export function useUser(credentials: LoginCredentials): UserHook {
   }
 
   async function get(token: string) {
-    let result = {
-      data: null,
-      error: null
-    }
+    setState(state => ({ ...state, loading: true }))
 
     UserService.get(token)
-      .then(response => (result.data = response))
+      .then(response => setState({ ...state, loading: false, data: response }))
       .catch(error => {
-        result.error = error
+        setState({ ...state, loading: false, error })
       })
-    setUserData(result.data?.user)
-
-    return { data: result.data, error: result.error }
+    setUserData(state.data?.user)
   }
 
   function auth(): any {
-    let result = {
-      data: null,
-      error: null
-    }
+    setState(state => ({ ...state, loading: true }))
 
     UserService.auth(credentials)
       .then(response => {
-        setUserData(result.data?.user)
-        result.data = response
+        setState({ ...state, loading: false, data: response })
+        setUserData(state.data?.user)
       })
       .catch(error => {
-        result.error = error
+        setState({ ...state, loading: false, error })
       })
-
-    return result
   }
 
-  return tokenExists ? get(tokenExists) : auth()
+  useEffect(() => {
+    tokenExists ? get(tokenExists) : auth()
+  }, [])
+
+  return { state, auth }
 }

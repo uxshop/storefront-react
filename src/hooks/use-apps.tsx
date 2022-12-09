@@ -1,6 +1,6 @@
+import { useCallback, useEffect, useState } from 'react'
 import { AppService } from '@uxshop/storefront-core'
 import { AppFields } from '@uxshop/storefront-core/dist/modules/app/AppTypes'
-import { useEffect, useState } from 'react'
 import { HookData } from './types/HookData'
 
 interface AppHookParams {
@@ -8,19 +8,21 @@ interface AppHookParams {
 }
 
 export function useApps({ id }: AppHookParams, fields?: AppFields[]): any {
-  const [status, setStatus] = useState<HookData>({
+  const [state, setState] = useState<HookData>({
     loading: false,
     data: null
   })
 
-  function getById({ id }: AppHookParams, fields?: AppFields[]) {
-    setStatus({ loading: true })
+  const getById = useCallback(() => {
+    setState({ ...state, loading: true })
     AppService.getById(id, fields)
-      .then(response => setStatus({ loading: false, data: response }))
-      .catch(error => setStatus({ loading: false, error }))
-  }
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
+  }, [id])
+
   useEffect(() => {
-    getById({ id })
+    getById()
   }, [])
-  return { ...status }
+
+  return { ...state }
 }

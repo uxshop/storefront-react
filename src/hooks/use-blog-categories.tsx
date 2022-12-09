@@ -12,7 +12,7 @@ export function useBlogCategories(
   getOneFilter?: BlogCategoryHookParams,
   fields?: BlogCategoryFields[]
 ) {
-  const [status, setState] = useState<HookData>({
+  const [state, setState] = useState<HookData>({
     loading: false,
     data: null,
     error: null
@@ -40,5 +40,5 @@ export function useBlogCategories(
     getOneFilter?.id || getOneFilter?.slug ? getOne() : getList()
   }, [])
 
-  return { ...status }
+  return { ...state }
 }

@@ -4,20 +4,22 @@ import { useEffect, useState } from 'react'
 import { HookData } from './types/HookData'
 
 export function useSections(filter: SectionFilter): HookData {
-  const [status, setStatus] = useState<HookData>({
-    loading: false
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
   })
   const urlParams = new URLSearchParams(window.location.search)
   const hashPreview = urlParams.get('preview')
 
   function getSections() {
-    setStatus({ loading: true })
+    setState(state => ({ ...state, loading: true }))
     SectionsService.getOne(filter)
       .then(response => {
-        setStatus({ loading: false, data: response })
+        setState({ ...state, loading: false, data: response })
       })
       .catch(error => {
-        setStatus({ loading: false, error })
+        setState({ ...state, loading: false, error })
       })
 
     if (hashPreview) {
@@ -27,7 +29,7 @@ export function useSections(filter: SectionFilter): HookData {
 
   function onUpdate({ data }: any) {
     if (data) {
-      setStatus({ loading: false, data })
+      setState({ ...state, loading: false, data })
     }
   }
 
@@ -35,5 +37,5 @@ export function useSections(filter: SectionFilter): HookData {
     getSections()
   }, [])
 
-  return { ...status }
+  return { ...state }
 }

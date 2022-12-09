@@ -1,19 +1,25 @@
+import { useEffect, useState } from 'react'
 import { NewsletterService } from '@uxshop/storefront-core'
 import { NewsletterInput } from '@uxshop/storefront-core/dist/modules/newsletter/NewsletterTypes'
+import { HookData } from './types/HookData'
 
 export function useNewsletter(userData: NewsletterInput): any {
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
+  })
   function subscribe() {
-    let result = {
-      data: null,
-      error: null
-    }
+    setState(state => ({ ...state, loading: true }))
 
     NewsletterService.subscribe(userData)
-      .then(response => (result.data = response))
-      .catch(error => (result.error = error))
-
-    return result
+      .then(response => setState({ loading: false, data: response }))
+      .catch(error => setState({ loading: false, error }))
   }
 
-  return subscribe()
+  useEffect(() => {
+    subscribe
+  })
+
+  return { ...state }
 }

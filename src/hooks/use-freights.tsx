@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { FreightService } from '@uxshop/storefront-core'
 import {
   Freight,
@@ -18,22 +18,26 @@ interface FreightData {
 }
 
 export function useFreights(params: FreightHookParams, fields?: FreightFields[]): FreightData {
-  const [status, setStatus] = useState<HookData>({
+  const [state, setState] = useState<HookData>({
     loading: false,
-    data: null
+    data: null,
+    error: null
   })
 
-  function getList() {
-    const service = params.variationId && params.zipCode && FreightService.getList
+  const getList = useCallback(() => {
+    setState(state => ({ ...state, loading: true }))
 
-    service(params, fields)
-      .then(response => setStatus({ loading: false, data: response }))
-      .catch(error => setStatus({ loading: false, error }))
-  }
+    const paramsExists = params.variationId && params.zipCode
+
+    paramsExists &&
+      FreightService.getList(params, fields)
+        .then(response => setState(state => ({ ...state, loading: false, data: response })))
+        .catch(error => setState(state => ({ ...state, loading: false, error })))
+  }, [params.variationId, params.zipCode, params.components])
 
   useEffect(() => {
     getList()
-  }, [params.variationId, params.zipCode, params.components])
+  }, [])
 
-  return { ...status }
+  return { ...state }
 }

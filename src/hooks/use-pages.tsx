@@ -9,33 +9,34 @@ interface PageHookParams {
 }
 
 export function usePages({ id, slug }: PageHookParams, fields?: PageFields[]): any {
-  const [status, setStatus] = useState<HookData>({
+  const [state, setState] = useState<HookData>({
     loading: false,
-    data: null
+    data: null,
+    error: null
   })
 
   function getOne() {
-    setStatus({ loading: true })
+    setState(state => ({ ...state, loading: true }))
 
     const service = id ? PagesService.getById : PagesService.getBySlug
     const param = id ?? slug
 
     service(param, fields)
-      .then(response => setStatus({ loading: false, data: response }))
-      .catch(error => setStatus({ loading: false, error }))
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
 
   function getList() {
-    setStatus({ loading: true })
+    setState(state => ({ ...state, loading: true }))
 
     PagesService.getList(fields)
-      .then(response => setStatus({ loading: false, data: response }))
-      .catch(error => setStatus({ loading: false, error }))
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
 
   useEffect(() => {
     id || slug ? getOne() : getList()
   }, [])
 
-  return { ...status }
+  return { ...state }
 }

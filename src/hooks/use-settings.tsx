@@ -6,22 +6,25 @@ import { HookData } from './types/HookData'
 export function useSettings(filter: SettingFilter): HookData {
   const urlParams = new URLSearchParams(window.location.search)
   const hashPreview = urlParams.get('preview')
-  const [status, setStatus] = useState<HookData>({
-    loading: false
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
   })
 
   async function getSettings() {
-    setStatus({ loading: true })
+    setState(state => ({ ...state, loading: true }))
+
     SettingsService.getOne(filter)
       .then(response => {
-        setStatus({ loading: false, data: response })
+        setState({ ...state, loading: false, data: response })
       })
-      .catch(error => setStatus({ loading: false, error }))
+      .catch(error => setState({ ...state, loading: false, error }))
   }
 
   function onUpdate({ data }: any) {
     if (data) {
-      setStatus({ loading: false, data })
+      setState({ ...state, loading: false, data })
     }
   }
 
@@ -32,5 +35,5 @@ export function useSettings(filter: SettingFilter): HookData {
     }
   }, [])
 
-  return { ...status }
+  return { ...state }
 }
