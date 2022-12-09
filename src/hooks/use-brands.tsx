@@ -25,18 +25,12 @@ export function useBrands({ id, slug, pagination }: BrandHookParams, fields?: Br
   function getOne({ id, slug }: GetOneParams, fields?: BrandFields[]) {
     setState(state => ({ ...state, loading: true }))
 
-    const service = id
-      ? BrandService.getById(id).then(response =>
-          setState(state => ({ ...state, loading: false, data: response }))
-        )
-      : BrandService.getBySlug(slug)
-          .then(response => setState(state => ({ ...state, loading: false, data: response })))
-          .catch(error => setState(state => ({ ...state, loading: false, error })))
-    // const param = id ?? slug
+    const service = id ? BrandService.getById : BrandService.getBySlug
+    const param = id ?? slug
 
-    // service(param, fields)
-    //   .then(response => setState(state => ({ ...state, loading: false, data: response })))
-    //   .catch(error => setState(state => ({ ...state, loading: false, error })))
+    service(param, fields)
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
 
   function getList(pagination?: PaginationFilter, fields?: BrandFields[]) {
