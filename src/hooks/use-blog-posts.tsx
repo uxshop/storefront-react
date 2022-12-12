@@ -23,7 +23,7 @@ export function useBlogPosts(
     error: null
   })
 
-  const getOne = useCallback(() => {
+  function getOne() {
     setState({ loading: true })
 
     const service = id ? BlogPostService.getById : BlogPostService.getBySlug
@@ -31,9 +31,9 @@ export function useBlogPosts(
     service(param, fields)
       .then(response => setState(state => ({ ...state, loading: false, data: response })))
       .catch(error => setState(state => ({ ...state, loading: false, error })))
-  }, [id, slug])
+  }
 
-  const getList = useCallback(() => {
+  function getList() {
     setState({ loading: true })
 
     const filter = { page, first, postCategoryId }
@@ -42,10 +42,10 @@ export function useBlogPosts(
     BlogPostService.getList({ ...filter, ...fastSearch }, fields)
       .then(response => setState(state => ({ ...state, loading: false, data: response })))
       .catch(error => setState(state => ({ ...state, loading: false, error })))
-  }, [fields])
+  }
 
   useEffect(() => {
     id || slug ? getOne() : getList()
-  })
+  }, [])
   return { ...state }
 }
