@@ -16,10 +16,10 @@ export function useCategory({ id, slug }: CategoryHookParams, fields?: CategoryF
   })
 
   function getOne() {
+    setState(state => ({ ...state, loading: true }))
     const service = id ? CategoryService.getById : CategoryService.getBySlug
     const param = id ?? slug
 
-    setState(state => ({ ...state, loading: true }))
     service(param, fields)
       .then(response => setState(state => ({ ...state, loading: false, data: response })))
       .catch(error => setState(state => ({ ...state, loading: false, error })))
