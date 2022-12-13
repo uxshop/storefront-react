@@ -1,18 +1,13 @@
 import { useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 import { BrandService } from '@uxshop/storefront-core'
 import { BrandFields } from '@uxshop/storefront-core/dist/modules/brand/BrandTypes'
 import { PaginationFilter } from '@uxshop/storefront-core/dist/types/PaginationTypes'
-import { HookData } from './types/HookData'
 
 interface BrandHookParams {
   id?: string
   slug?: string
   pagination?: PaginationFilter
-}
-
-interface GetOneParams {
-  id?: string
-  slug?: string
 }
 
 export function useBrands({ id, slug, pagination }: BrandHookParams, fields?: BrandFields[]) {
@@ -22,7 +17,7 @@ export function useBrands({ id, slug, pagination }: BrandHookParams, fields?: Br
     error: null
   })
 
-  function getOne({ id, slug }: GetOneParams, fields?: BrandFields[]) {
+  function getOne() {
     setState(state => ({ ...state, loading: true }))
 
     const service = id ? BrandService.getById : BrandService.getBySlug
@@ -33,7 +28,7 @@ export function useBrands({ id, slug, pagination }: BrandHookParams, fields?: Br
       .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
 
-  function getList(pagination?: PaginationFilter, fields?: BrandFields[]) {
+  function getList() {
     setState(state => ({ ...state, loading: true }))
 
     BrandService.getList(pagination, fields)
@@ -42,7 +37,7 @@ export function useBrands({ id, slug, pagination }: BrandHookParams, fields?: Br
   }
 
   useEffect(() => {
-    id || slug ? getOne({ id: id, slug: slug }, fields) : getList(pagination, fields)
+    id || slug ? getOne() : getList()
   }, [])
 
   return { ...state }
