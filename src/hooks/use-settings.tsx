@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 import { SettingsService, Socket } from '@uxshop/storefront-core'
 import { SettingFilter } from '@uxshop/storefront-core/dist/modules/settings/SettingsTypes'
-import { HookData } from './types/HookData'
 
 export function useSettings(filter: SettingFilter): HookData {
   const urlParams = new URLSearchParams(window.location.search)

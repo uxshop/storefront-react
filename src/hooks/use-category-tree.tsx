@@ -1,7 +1,7 @@
 import { CategoryService } from '@uxshop/storefront-core'
+import { HookData } from './types/HookData'
 import { CategoryTreeFields } from '@uxshop/storefront-core/dist/modules/category/CategoryTypes'
 import { useEffect, useState } from 'react'
-import { HookData } from './types/HookData'
 
 export function useCategoryTree(fields?: CategoryTreeFields[]) {
   const [state, setState] = useState<HookData>({

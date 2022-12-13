@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 import { CategoryService } from '@uxshop/storefront-core'
 import { CategoryFields } from '@uxshop/storefront-core/dist/modules/category/CategoryTypes'
-import { HookData } from './types/HookData'
 
 interface CategoryHookParams {
   id?: string

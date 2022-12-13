@@ -1,7 +1,7 @@
-import { SectionsService, Socket } from '@uxshop/storefront-core'
-import { SectionFilter } from '@uxshop/storefront-core/dist/modules/sections/SectionsTypes'
 import { useEffect, useState } from 'react'
 import { HookData } from './types/HookData'
+import { SectionsService, Socket } from '@uxshop/storefront-core'
+import { SectionFilter } from '@uxshop/storefront-core/dist/modules/sections/SectionsTypes'
 
 export function useSections(filter: SectionFilter): HookData {
   const [state, setState] = useState<HookData>({

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 import { NewsletterService } from '@uxshop/storefront-core'
 import { NewsletterInput } from '@uxshop/storefront-core/dist/modules/newsletter/NewsletterTypes'
-import { HookData } from './types/HookData'
 
 export function useNewsletter(userData: NewsletterInput): any {
   const [state, setState] = useState<HookData>({

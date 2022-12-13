@@ -1,6 +1,6 @@
-import { ShopService } from '@uxshop/storefront-core'
 import { useEffect, useState } from 'react'
 import { HookData } from './types/HookData'
+import { ShopService } from '@uxshop/storefront-core'
 
 export function useShop(): HookData {
   const [state, setState] = useState<HookData>({

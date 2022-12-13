@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HookData } from './types/HookData'
 import { LandingPagesService, Socket } from '@uxshop/storefront-core'
 import { LandingPageFields } from '@uxshop/storefront-core/dist/modules/landing-pages/LandingPagesTypes'

@@ -1,11 +1,11 @@
+import { useCallback, useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 import { ProductService } from '@uxshop/storefront-core'
 import {
   ProductFields,
   ProductListFilter,
   Aggregator
 } from '@uxshop/storefront-core/dist/modules/product/ProductTypes'
-import { useCallback, useEffect, useState } from 'react'
-import { HookData } from './types/HookData'
 
 interface ProductHookParams {
   productId?: string

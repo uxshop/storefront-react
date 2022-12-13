@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 import { ScriptsService } from '@uxshop/storefront-core'
 import { ScriptFields } from '@uxshop/storefront-core/dist/modules/scripts/ScriptsTypes'
-import { HookData } from './types/HookData'
 interface ScriptsHookParam {
   page?: string
   location?: string

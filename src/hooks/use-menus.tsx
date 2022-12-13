@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 import { MenuService } from '@uxshop/storefront-core'
 import { MenuFields } from '@uxshop/storefront-core/dist/modules/menu/MenuTypes'
-import { HookData } from './types/HookData'
 
 interface MenuHookParams {
   id?: string

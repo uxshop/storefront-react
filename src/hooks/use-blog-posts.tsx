@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BlogPostService } from '@uxshop/storefront-core'
 import {
   BlogPostFields,
@@ -24,8 +24,7 @@ export function useBlogPosts(
   })
 
   function getOne() {
-    setState({ loading: true })
-
+    setState(state => ({ ...state, loading: true }))
     const service = id ? BlogPostService.getById : BlogPostService.getBySlug
     const param = id ?? slug
     service(param, fields)

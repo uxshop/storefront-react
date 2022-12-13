@@ -1,7 +1,7 @@
-import { PagesService } from '@uxshop/storefront-core'
-import { PageFields } from '@uxshop/storefront-core/dist/modules/pages/PageTypes'
 import { useEffect, useState } from 'react'
 import { HookData } from './types/HookData'
+import { PagesService } from '@uxshop/storefront-core'
+import { PageFields } from '@uxshop/storefront-core/dist/modules/pages/PageTypes'
 
 interface PageHookParams {
   id?: string
