@@ -1,31 +1,41 @@
+import { useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 import { SectionsService, Socket } from '@uxshop/storefront-core'
 import { SectionFilter } from '@uxshop/storefront-core/dist/modules/sections/SectionsTypes'
 
-export function useSections(filter: SectionFilter): any {
+export function useSections(filter: SectionFilter): HookData {
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
+  })
   const urlParams = new URLSearchParams(window.location.search)
   const hashPreview = urlParams.get('preview')
 
-  let result = {
-    data: null,
-    error: null
-  }
-
   function getSections() {
+    setState(state => ({ ...state, loading: true }))
     SectionsService.getOne(filter)
-      .then(response => (result.data = response))
-      .catch(error => (result.error = error))
+      .then(response => {
+        setState({ ...state, loading: false, data: response })
+      })
+      .catch(error => {
+        setState({ ...state, loading: false, error })
+      })
 
     if (hashPreview) {
       Socket.create(hashPreview, onUpdate)
     }
-    return result
   }
 
   function onUpdate({ data }: any) {
     if (data) {
-      result.data = data?.sections
+      setState({ ...state, loading: false, data })
     }
   }
 
-  return getSections()
+  useEffect(() => {
+    getSections()
+  }, [])
+
+  return { ...state }
 }

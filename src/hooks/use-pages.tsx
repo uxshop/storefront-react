@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 import { PagesService } from '@uxshop/storefront-core'
 import { PageFields } from '@uxshop/storefront-core/dist/modules/pages/PageTypes'
 
@@ -7,34 +9,34 @@ interface PageHookParams {
 }
 
 export function usePages({ id, slug }: PageHookParams, fields?: PageFields[]): any {
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
+  })
+
   function getOne() {
-    let result = {
-      data: null,
-      error: null
-    }
+    setState(state => ({ ...state, loading: true }))
 
     const service = id ? PagesService.getById : PagesService.getBySlug
     const param = id ?? slug
 
     service(param, fields)
-      .then(response => (result.data = response))
-      .catch(error => (result.error = error))
-
-    return result
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
 
   function getList() {
-    let result = {
-      data: null,
-      error: null
-    }
+    setState(state => ({ ...state, loading: true }))
 
     PagesService.getList(fields)
-      .then(response => (result.data = response))
-      .catch(error => (result.error = error))
-
-    return result
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
 
-  return id || slug ? getOne() : getList()
+  useEffect(() => {
+    id || slug ? getOne() : getList()
+  }, [])
+
+  return { ...state }
 }

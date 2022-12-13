@@ -1,22 +1,28 @@
+import { useCallback, useEffect, useState } from 'react'
 import { AppService } from '@uxshop/storefront-core'
 import { AppFields } from '@uxshop/storefront-core/dist/modules/app/AppTypes'
+import { HookData } from './types/HookData'
 
 interface AppHookParams {
   id: string
 }
 
 export function useApps({ id }: AppHookParams, fields?: AppFields[]): any {
-  function getById({ id }: AppHookParams, fields?: AppFields[]) {
-    let result = {
-      data: null,
-      error: null
-    }
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null
+  })
+
+  const getById = useCallback(() => {
+    setState({ ...state, loading: true })
     AppService.getById(id, fields)
-      .then(response => (result.data = response))
-      .catch(error => (result.error = error))
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
+  }, [id])
 
-    return result
-  }
+  useEffect(() => {
+    getById()
+  }, [])
 
-  return getById({ id }, fields)
+  return { ...state }
 }
