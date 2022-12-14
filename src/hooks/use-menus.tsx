@@ -30,7 +30,11 @@ export function useMenus({ id }: MenuHookParams, fields?: MenuFields[]): HookDat
 
   useEffect(() => {
     id ? getOneById() : getList()
+  }, [])
+
+  useEffect(() => {
+    id && getOneById()
   }, [id])
 
-  return { ...state }
+  return state
 }
