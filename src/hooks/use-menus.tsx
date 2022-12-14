@@ -32,5 +32,9 @@ export function useMenus({ id }: MenuHookParams, fields?: MenuFields[]): HookDat
     id ? getOneById() : getList()
   }, [])
 
-  return { ...state }
+  useEffect(() => {
+    id && getOneById()
+  }, [id])
+
+  return state
 }
