@@ -17,6 +17,8 @@ interface Routes {
   blogPost: RouteItem
   blogCategory: RouteItem
   search: RouteItem
+  landingTests: RouteItem
+  themeTests: RouteItem
 }
 
 const defaultRoutes: Routes = {
@@ -63,6 +65,14 @@ const defaultRoutes: Routes = {
   notfound: {
     path: '*',
     component: 'not-found'
+  },
+  themeTests: {
+    path: 'theme-components',
+    component: 'theme-components'
+  },
+  landingTests: {
+    path: 'landing-components',
+    component: 'landing-components'
   }
 }
 
