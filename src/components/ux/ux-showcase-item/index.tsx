@@ -1,6 +1,6 @@
 import React from 'react'
-import { UxShowcaseItemProps } from './types'
 import { defineCustomElement as defineUxShowcaseItem } from '@uxshop/storefront-components/dist/components/ux-showcase-item'
+import { UxShowcaseItemProps } from './types'
 
 export function UxShowcaseItem({ settings }: UxShowcaseItemProps) {
   const dataProps = {
