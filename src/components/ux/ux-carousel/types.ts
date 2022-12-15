@@ -7,4 +7,5 @@ export interface UxCarouselSettings {
 
 export interface UxCarouselProps {
   settings: UxCarouselSettings
+  children: JSX.Element[]
 }
