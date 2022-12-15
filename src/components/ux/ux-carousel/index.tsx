@@ -2,7 +2,7 @@ import React from 'react'
 import { UxCarouselProps } from './types'
 import { defineCustomElement as defineUxCarousel } from '@uxshop/storefront-components/dist/components/ux-carousel'
 
-export function UxCarousel({ settings }: UxCarouselProps) {
+export function UxCarousel({ settings, children }: UxCarouselProps) {
   const dataProps = {
     'data-arrows': settings.arrows,
     'data-autoplay': settings.autoplay,
@@ -12,5 +12,5 @@ export function UxCarousel({ settings }: UxCarouselProps) {
 
   defineUxCarousel()
 
-  return React.createElement('ux-carousel', dataProps)
+  return React.createElement('ux-carousel', dataProps, children)
 }
