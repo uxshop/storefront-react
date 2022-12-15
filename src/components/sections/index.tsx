@@ -13,8 +13,8 @@ export function Sections({ sections, components }: SectionsPropsType): JSX.Eleme
 
   return (
     <>
-      {sectionsData?.content &&
-        sectionsData.content.map(
+      {sectionsData?.data?.content &&
+        sectionsData?.data?.content.map(
           ({ id, schema, blocks, settings, type, disabled }): JSX.Element => {
             const component = components[schema]
 

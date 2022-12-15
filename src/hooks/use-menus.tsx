@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 import { MenuService } from '@uxshop/storefront-core'
 import { MenuFields } from '@uxshop/storefront-core/dist/modules/menu/MenuTypes'
 
@@ -6,22 +7,34 @@ interface MenuHookParams {
   id?: string
 }
 
-export function useMenus({ id }: MenuHookParams, fields?: Array<MenuFields>): any {
-  const [menus, setMenus] = useState<any>()
+export function useMenus({ id }: MenuHookParams, fields?: MenuFields[]): HookData {
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
+  })
 
-  async function getOneById(id: string, fields?: Array<MenuFields>) {
-    const result = await MenuService.getById(id, fields)
-    setMenus(result)
-  }
-
-  async function getList(fields?: Array<MenuFields>) {
-    const result = await MenuService.getList(fields)
-    setMenus(result)
-  }
-
-  useEffect(() => {
-    id ? getOneById(id, fields) : getList(fields)
+  const getOneById = useCallback(() => {
+    setState(state => ({ ...state, loading: true }))
+    MenuService.getById(id, fields)
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }, [id])
 
-  return menus
+  const getList = useCallback(() => {
+    setState(state => ({ ...state, loading: true }))
+    MenuService.getList(fields)
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
+  }, [fields])
+
+  useEffect(() => {
+    id ? getOneById() : getList()
+  }, [])
+
+  useEffect(() => {
+    id && getOneById()
+  }, [id])
+
+  return state
 }

@@ -1,73 +1,64 @@
-import { useEffect, useState } from 'react'
 import { UserService, CookieService } from '@uxshop/storefront-core'
 import {
   User,
   LoginCredentials,
   UserFields
 } from '@uxshop/storefront-core/dist/modules/user/UserTypes'
+import { useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 interface UserHook {
-  data: User
+  state: HookData
   auth: (credentials: LoginCredentials) => Promise<any>
 }
 
 const COOKIE_USER = '_dc_token'
 
 export function useUser(credentials: LoginCredentials): UserHook {
-  const [user, setUser] = useState<User>({})
-  const [userToken, setUserToken] = useState<string>('')
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
+  })
+
+  const tokenExists = CookieService.getCookie(COOKIE_USER)
+  tokenExists ? (setToken(tokenExists), get(tokenExists)) : credentials && auth()
 
   function setToken(token: string) {
-    if (token) {
-      setUserToken(token)
-      CookieService.setCookie(COOKIE_USER, token, 7)
-    }
+    if (!token) return
+    CookieService.setCookie(COOKIE_USER, token, 7)
   }
 
   function setUserData(user: User) {
-    setUser(user)
     setToken(user.token)
   }
 
-  function eraseToken() {
-    setUserToken('')
-    CookieService.eraseCookie(COOKIE_USER)
-  }
-
-  function cleanUserData() {
-    eraseToken()
-    setUser({})
-  }
-
   async function get(token: string) {
-    try {
-      const user = await UserService.get(token)
-      user && setUserData(user)
-    } catch (error) {
-      cleanUserData()
-    }
+    setState(state => ({ ...state, loading: true }))
+
+    UserService.get(token)
+      .then(response => setState({ ...state, loading: false, data: response }))
+      .catch(error => {
+        setState({ ...state, loading: false, error })
+      })
+    setUserData(state.data?.user)
   }
 
-  async function auth(credentials: LoginCredentials, fields?: Array<UserFields>): Promise<any> {
-    try {
-      const user = await UserService.auth(credentials)
-      user && setUserData(user)
-    } catch (error) {
-      cleanUserData()
-    }
+  function auth(): any {
+    setState(state => ({ ...state, loading: true }))
+
+    UserService.auth(credentials)
+      .then(response => {
+        setState({ ...state, loading: false, data: response })
+        setUserData(state.data?.user)
+      })
+      .catch(error => {
+        setState({ ...state, loading: false, error })
+      })
   }
 
   useEffect(() => {
-    const token = CookieService.getCookie(COOKIE_USER)
-    if (token) {
-      setToken(token)
-      get(token)
-    } else {
-      credentials && auth(credentials)
-    }
+    tokenExists ? get(tokenExists) : auth()
   }, [])
 
-  return {
-    data: user,
-    auth: auth
-  }
+  return { state, auth }
 }

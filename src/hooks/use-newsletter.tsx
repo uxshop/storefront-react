@@ -1,14 +1,25 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 import { NewsletterService } from '@uxshop/storefront-core'
 import { NewsletterInput } from '@uxshop/storefront-core/dist/modules/newsletter/NewsletterTypes'
 
-export function useNewsletter(): any {
-  const [newsletter, setNewsletter] = useState<any>(null)
+export function useNewsletter(userData: NewsletterInput): any {
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
+  })
+  function subscribe() {
+    setState(state => ({ ...state, loading: true }))
 
-  async function subscribe(userData: NewsletterInput) {
-    const result = await NewsletterService.subscribe(userData)
-    setNewsletter(result)
+    NewsletterService.subscribe(userData)
+      .then(response => setState({ loading: false, data: response }))
+      .catch(error => setState({ loading: false, error }))
   }
 
-  return { newsletter, subscribe }
+  useEffect(() => {
+    subscribe
+  })
+
+  return { ...state }
 }

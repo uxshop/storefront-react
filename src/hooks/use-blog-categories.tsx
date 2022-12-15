@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 import { BlogCategoryService } from '@uxshop/storefront-core'
 import { BlogCategoryFields } from '@uxshop/storefront-core/dist/modules/blog/category/BlogCategoryTypes'
 
@@ -10,24 +11,34 @@ interface BlogCategoryHookParams {
 export function useBlogCategories(
   getOneFilter?: BlogCategoryHookParams,
   fields?: BlogCategoryFields[]
-): any {
-  const [blogCategories, setBlogCategories] = useState<any>()
+) {
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
+  })
 
-  async function getOne({ id, slug }: BlogCategoryHookParams, fields?: BlogCategoryFields[]) {
-    const service = id ? BlogCategoryService.getById : BlogCategoryService.getBySlug
-    const param = id ?? slug
-    const result = await service(param, fields)
-    setBlogCategories(result)
+  function getOne() {
+    setState(state => ({ ...state, loading: true }))
+
+    const service = getOneFilter.id ? BlogCategoryService.getById : BlogCategoryService.getBySlug
+    const param = getOneFilter.id ?? getOneFilter.slug
+
+    service(param, fields)
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
 
-  async function getList(fields?: BlogCategoryFields[]) {
-    const result = await BlogCategoryService.getList(fields)
-    setBlogCategories(result)
-  }
+  function getList() {
+    setState(state => ({ ...state, loading: true }))
 
+    BlogCategoryService.getList(fields)
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
+  }
   useEffect(() => {
-    getOneFilter?.id || getOneFilter?.slug ? getOne(getOneFilter, fields) : getList(fields)
+    getOneFilter?.id || getOneFilter?.slug ? getOne() : getList()
   }, [])
 
-  return blogCategories
+  return { ...state }
 }

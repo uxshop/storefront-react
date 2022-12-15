@@ -4,6 +4,7 @@ import {
   BlogPostFields,
   BlogPostListFilter
 } from '@uxshop/storefront-core/dist/modules/blog/post/BlogPostTypes'
+import { HookData } from './types/HookData'
 
 interface BlogPostHookParams extends Omit<BlogPostListFilter, 'page' | 'fastSearch'> {
   page?: number
@@ -14,36 +15,36 @@ interface BlogPostHookParams extends Omit<BlogPostListFilter, 'page' | 'fastSear
 
 export function useBlogPosts(
   { id, slug, page, first, postCategoryId, searchTerm }: BlogPostHookParams,
-  fields?: Array<BlogPostFields>
+  fields?: BlogPostFields[]
 ): any {
-  const [blogPosts, setBlogPosts] = useState<any>()
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
+  })
 
-  async function getOne(id?: string, slug?: string, fields?: BlogPostFields[]) {
+  function getOne() {
+    setState(state => ({ ...state, loading: true }))
     const service = id ? BlogPostService.getById : BlogPostService.getBySlug
     const param = id ?? slug
-    const result = await service(param, fields)
-    setBlogPosts(result)
+    service(param, fields)
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
 
-  async function getList(
-    filter?: BlogPostListFilter,
-    searchTerm?: string,
-    fields?: BlogPostFields[]
-  ) {
+  function getList() {
+    setState({ loading: true })
+
+    const filter = { page, first, postCategoryId }
     const fastSearch = searchTerm ? { fastSearch: { queryString: searchTerm } } : {}
-    try {
-      const result = await BlogPostService.getList({ ...filter, ...fastSearch }, fields)
-      setBlogPosts(result)
-    } catch (error) {
-      setBlogPosts(null)
-    }
+
+    BlogPostService.getList({ ...filter, ...fastSearch }, fields)
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
 
   useEffect(() => {
-    id || slug
-      ? getOne(id, slug, fields)
-      : getList({ page, first, postCategoryId }, searchTerm, fields)
-  }, [id, slug, page, first, postCategoryId, searchTerm, fields])
-
-  return blogPosts
+    id || slug ? getOne() : getList()
+  }, [])
+  return { ...state }
 }

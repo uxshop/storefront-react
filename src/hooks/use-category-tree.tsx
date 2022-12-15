@@ -1,18 +1,25 @@
-import { useEffect, useState } from 'react'
 import { CategoryService } from '@uxshop/storefront-core'
+import { HookData } from './types/HookData'
 import { CategoryTreeFields } from '@uxshop/storefront-core/dist/modules/category/CategoryTypes'
+import { useEffect, useState } from 'react'
 
-export function useCategoryTree(fields?: Array<CategoryTreeFields>) {
-  const [categoryTree, setCategoryTree] = useState<any>()
+export function useCategoryTree(fields?: CategoryTreeFields[]) {
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
+  })
 
-  async function get(fields?: Array<CategoryTreeFields>) {
-    const result = await CategoryService.getTree(fields)
-    setCategoryTree(result)
+  function get() {
+    setState(state => ({ ...state, loading: true }))
+
+    CategoryService.getTree(fields)
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
   }
 
   useEffect(() => {
-    get(fields)
+    get()
   }, [])
-
-  return categoryTree
+  return { ...state }
 }
