@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { HookData } from './types/HookData'
 import { SidebarService } from '@uxshop/storefront-core'
+import { nullable } from '@uxshop/storefront-core/src/types/HelpersTypes'
+import { HookData } from './types/HookData'
 
 interface SidebarHookParams {
   id: number
@@ -8,7 +9,7 @@ interface SidebarHookParams {
   name: string
 }
 
-export function useSidebar(sidebarFilter?: SidebarHookParams[]): HookData {
+export function useSidebar(sidebarFilter?: nullable<SidebarHookParams[]>): HookData {
   const [state, setState] = useState<HookData>({
     loading: false,
     data: null,
