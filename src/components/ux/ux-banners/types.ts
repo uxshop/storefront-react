@@ -1,7 +1,16 @@
 export interface UxBannersSettings {
-  dataImages?: string
+  alt: string
+  srcDesktop: string
+  srcMobile: string
+}
+
+interface Blocks {
+  name: string
+  schema: string
+  settings: UxBannersSettings
 }
 
 export interface UxBannersProps {
-  settings: UxBannersSettings
+  settings: any[]
+  blocks: Blocks[]
 }
