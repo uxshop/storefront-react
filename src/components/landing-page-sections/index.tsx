@@ -1,9 +1,9 @@
-import { UxBanners } from '../ux/ux-banners'
-import { UxCarousel } from '../ux/ux-carousel'
-import { UxShowcase } from '../ux/ux-showcase'
-import { UxTestimonials } from '../ux/ux-testimonials'
-import { UxTextImage } from '../ux/ux-text-image'
-import { UxVideo } from '../ux/ux-video'
+import { UxBanners } from '../landing-page-sections/ux-banners'
+import { UxCarousel } from '../landing-page-sections/ux-carousel'
+import { UxShowcase } from '../landing-page-sections/ux-showcase'
+import { UxTestimonials } from '../landing-page-sections/ux-testimonials'
+import { UxTextImage } from '../landing-page-sections/ux-text-image'
+import { UxVideo } from '../landing-page-sections/ux-video'
 
 export default {
   banners: UxBanners,
