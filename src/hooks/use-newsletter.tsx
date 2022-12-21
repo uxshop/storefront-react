@@ -9,12 +9,14 @@ export function useNewsletter(): any {
     data: null,
     error: null
   })
-  function subscribe(userData?: NewsletterInput) {
+  async function subscribe(userData?: NewsletterInput) {
     setState(state => ({ ...state, loading: true }))
 
-    NewsletterService.subscribe(userData)
+    await NewsletterService.subscribe(userData)
       .then(response => setState({ loading: false, data: response }))
       .catch(error => setState({ loading: false, error }))
+
+    return { state }
   }
 
   useEffect(() => {
