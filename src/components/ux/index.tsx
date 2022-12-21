@@ -7,7 +7,7 @@ import { UxVideo } from '../ux/ux-video'
 
 export default {
   banners: UxBanners,
-  carrossel: UxCarousel,
+  carousel: UxCarousel,
   showcase: UxShowcase,
   testimonials: UxTestimonials,
   'text-image': UxTextImage,
