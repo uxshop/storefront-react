@@ -45,7 +45,7 @@ const defaultRoutes: Routes = {
     component: 'institutional'
   },
   landingpage: {
-    path: ':slug/lp',
+    path: ':id/lp',
     component: 'landingpage'
   },
   blogPost: {

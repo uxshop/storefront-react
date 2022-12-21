@@ -4,7 +4,7 @@ import { SectionLoader } from '../section-loader'
 
 type Obj = Record<string, any>
 export interface SectionsPropsType {
-  components: Obj
+  components?: Obj
   sections?: any
 }
 
