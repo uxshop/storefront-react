@@ -23,8 +23,8 @@ export function useSettings(filter: SettingFilter): HookData {
   }
 
   function onUpdate({ data }: any) {
-    if (data) {
-      setState({ ...state, loading: false, data })
+    if (data.settings) {
+      setState({ ...state, loading: false, data: data.settings })
     }
   }
 

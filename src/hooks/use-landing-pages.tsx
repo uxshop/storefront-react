@@ -37,8 +37,8 @@ export function useLandingPages(
   }
 
   function onUpdate({ data }: any) {
-    if (data) {
-      state.data = data?.landingPages
+    if (data.landingPage) {
+      setState(state => ({ ...state, loading: false, data: data?.landingPage }))
     }
   }
 
