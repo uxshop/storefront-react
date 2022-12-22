@@ -1,22 +1,18 @@
 import React from 'react'
-import { useSections } from '../../hooks/use-sections'
+import { useLandingPages } from '../../hooks/use-landing-pages'
 import { SectionLoader } from '../section-loader'
+import { SectionsPropsType } from '../sections'
+import landingComponents from '../landing-page-sections'
 
-type Obj = Record<string, any>
-export interface SectionsPropsType {
-  components?: Obj
-  sections?: any
-}
-
-export function Sections({ sections, components }: SectionsPropsType): JSX.Element {
-  const sectionsData = sections ? sections : useSections({})
-
+export function LandingPage({ sections, components }: SectionsPropsType): JSX.Element {
+  const landingPageData = sections ?? useLandingPages({})
+  const mergedComponents = components ? { ...landingComponents, ...components } : landingComponents
   return (
     <>
-      {sectionsData?.data?.content &&
-        sectionsData?.data?.content.map(
+      {landingPageData?.data?.content?.sections &&
+        landingPageData?.data?.content?.sections.map(
           ({ id, schema, blocks, settings, type, disabled }): JSX.Element => {
-            const component = components[schema]
+            const component = mergedComponents[schema]
 
             return (
               <React.Fragment key={id}>

@@ -4,9 +4,9 @@ import { defineCustomElement as defineUxVideo } from '@uxshop/storefront-compone
 
 export function UxVideo({ settings }: UxVideoProps) {
   const dataProps = {
-    'data-src': settings.url,
-    'data-title': settings.title,
-    'data-description': settings.description
+    'data-src': settings.dataSrc,
+    'data-title': settings.dataTitle,
+    'data-description': settings.dataDescription
   }
 
   defineUxVideo()
