@@ -28,8 +28,8 @@ export function useSections(filter: SectionFilter): HookData {
   }
 
   function onUpdate({ data }: any) {
-    if (data) {
-      setState({ ...state, loading: false, data })
+    if (data.sections) {
+      setState({ ...state, loading: false, data: data.sections })
     }
   }
 
