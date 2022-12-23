@@ -38,7 +38,7 @@ export function useBrands({ id, slug, pagination }: BrandHookParams, fields?: Br
 
   useEffect(() => {
     id || slug ? getOne() : getList()
-  }, [])
+  }, [id, slug])
 
   return { ...state }
 }

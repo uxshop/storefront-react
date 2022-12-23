@@ -27,7 +27,7 @@ export function useCategory({ id, slug }: CategoryHookParams, fields?: CategoryF
 
   useEffect(() => {
     getOne()
-  }, [])
+  }, [id, slug])
 
   return { ...state }
 }
