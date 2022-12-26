@@ -1,7 +1,7 @@
 export interface UxTestimonialsSettings {
-  description: string
-  testimonials: string
-  title: string
+  dataDescription: string
+  dataTestimonials: string
+  dataTitle: string
 }
 
 export interface UxTestimonialsProps {

@@ -4,9 +4,9 @@ import { defineCustomElement as defineUxTestimonials } from '@uxshop/storefront-
 
 export function UxTestimonials({ settings }: UxTestimonialsProps) {
   const dataProps = {
-    'data-description': settings.description,
-    'data-testimonials': settings.testimonials,
-    'data-title': settings.title
+    'data-description': settings.dataDescription,
+    'data-testimonials': settings.dataTestimonials,
+    'data-title': settings.dataTitle
   }
 
   defineUxTestimonials()
