@@ -1,12 +1,12 @@
 export interface UxShowcaseItemSettings {
-  href: string
-  image: string
-  name: string
-  price: number
-  hasInterest?: boolean
-  parcelPrice?: number
-  parcels?: number
-  priceCompare?: number
+  dataHref: string
+  dataImage: string
+  dataName: string
+  dataPrice: number
+  dataHasInterest?: boolean
+  dataParcelPrice?: number
+  dataParcels?: number
+  dataPriceCompare?: number
 }
 
 export interface UxShowcaseItemProps {
