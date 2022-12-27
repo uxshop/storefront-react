@@ -1,10 +1,10 @@
 export interface UxCarouselItemSettings {
-  title?: string
-  description?: string
-  buttonLabel?: string
-  buttonHref?: string
-  desktopImage?: string
-  mobileImage?: string
+  dataTitle?: string
+  dataDescription?: string
+  dataButtonLabel?: string
+  dataButtonHref?: string
+  dataDesktopImage?: string
+  dataMobileImage?: string
 }
 
 export interface UxCarouselItemProps {
