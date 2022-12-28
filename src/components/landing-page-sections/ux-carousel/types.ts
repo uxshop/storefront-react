@@ -1,11 +1,19 @@
+import { UxCarouselItemSettings } from '../ux-carousel-item/types'
+
 export interface UxCarouselSettings {
-  rewind?: boolean
-  autoplay?: boolean
-  arrows?: boolean
-  pagination?: boolean
+  dataRewind?: boolean
+  dataAutoplay?: boolean
+  dataArrows?: boolean
+  dataPagination?: boolean
+}
+
+interface UxCarouselBlocks {
+  name: string
+  schema: string
+  settings: UxCarouselItemSettings
 }
 
 export interface UxCarouselProps {
   settings: UxCarouselSettings
-  children: JSX.Element[]
+  blocks: UxCarouselBlocks[]
 }
