@@ -4,6 +4,7 @@ import { SettingsService, Socket } from '@uxshop/storefront-core'
 import { SettingFilter } from '@uxshop/storefront-core/dist/modules/settings/SettingsTypes'
 
 export function useSettings(filter: SettingFilter): HookData {
+  const themeId = filter.themeId
   const urlParams = new URLSearchParams(window.location.search)
   const hashPreview = urlParams.get('preview')
   const [state, setState] = useState<HookData>({
@@ -27,6 +28,10 @@ export function useSettings(filter: SettingFilter): HookData {
       setState({ ...state, loading: false, data: data.settings })
     }
   }
+
+  useEffect(() => {
+    getSettings()
+  }, [themeId])
 
   useEffect(() => {
     getSettings()
