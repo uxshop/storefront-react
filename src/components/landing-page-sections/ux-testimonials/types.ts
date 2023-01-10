@@ -2,6 +2,7 @@ export interface UxTestimonialsBLockSettings {
   icon: string
   message: string
   name: string
+  contact: string
 }
 
 export interface UxTestimonialsBLocks {
