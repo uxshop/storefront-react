@@ -1,4 +1,5 @@
 export interface UxBannersSettings {
+  href: string
   alt: string
   srcDesktop: string
   srcMobile: string
