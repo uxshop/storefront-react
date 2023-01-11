@@ -2,11 +2,11 @@ import React from 'react'
 import { UxTestimonialsProps } from './types'
 import { defineCustomElement as defineUxTestimonials } from '@uxshop/storefront-components/dist/components/ux-testimonials'
 
-export function UxTestimonials({ settings }: UxTestimonialsProps) {
+export function UxTestimonials(props: UxTestimonialsProps) {
   const dataProps = {
-    'data-description': settings.description,
-    'data-testimonials': settings.testimonials,
-    'data-title': settings.title
+    'data-description': props.settings.dataDescription,
+    'data-testimonials': JSON.stringify(props.blocks.map(block => block.settings)),
+    'data-title': props.settings.dataTitle
   }
 
   defineUxTestimonials()
