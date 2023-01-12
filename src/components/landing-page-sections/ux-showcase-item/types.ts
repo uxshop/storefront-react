@@ -3,8 +3,7 @@ export interface UxShowcaseItemSettings {
   image: string
   name: string
   price: number
-  hasInterest?: boolean
-  parcelPrice?: number
+  parcelPrice: number
   parcels?: number
   priceCompare?: number
 }
