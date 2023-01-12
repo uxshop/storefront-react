@@ -15,7 +15,7 @@ export interface UxShowcaseBLocks {
 
 export interface UxShowcaseSettings {
   dataTitle: string
-  dataPerPage: string
+  dataItemLimit: string
 }
 
 export interface UxShowcaseProps {

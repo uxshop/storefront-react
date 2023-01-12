@@ -6,7 +6,7 @@ export function UxShowcase(props: UxShowcaseProps) {
   const dataProps = {
     'data-products': JSON.stringify(props.blocks.map(block => block.settings)),
     'data-title': props.settings.dataTitle,
-    'data-item-limit': props.settings.dataPerPage
+    'data-item-limit': props.settings.dataItemLimit
   }
 
   defineUxShowcase()
