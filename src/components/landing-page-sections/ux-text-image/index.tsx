@@ -6,6 +6,7 @@ export function UxTextImage({ settings }: UxTextImageProps) {
   const dataProps = {
     'data-image': settings.dataImage,
     'data-title': settings.dataTitle,
+    'data-subtitle': settings.dataSubtitle,
     'data-description': settings.dataDescription,
     'data-button-label': settings.dataButtonLabel,
     'data-button-href': settings.dataButtonHref,

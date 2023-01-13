@@ -1,5 +1,6 @@
 export interface UxTextImageSettings {
   dataTitle: string
+  dataSubtitle: string
   dataDescription: string
   dataImage: string
   dataButtonLabel: string
