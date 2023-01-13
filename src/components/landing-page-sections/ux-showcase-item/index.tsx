@@ -4,7 +4,6 @@ import { UxShowcaseItemProps } from './types'
 
 export function UxShowcaseItem({ settings }: UxShowcaseItemProps) {
   const dataProps = {
-    'data-has-interest': settings.hasInterest,
     'data-href': settings.href,
     'data-image': settings.image,
     'data-name': settings.name,
