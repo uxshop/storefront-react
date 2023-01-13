@@ -1,6 +1,6 @@
-import { defineCustomElement as defineUxTextImage } from '@uxshop/storefront-components/dist/components/ux-text-image'
 import React from 'react'
 import { UxTextImageProps } from './types'
+import { defineCustomElement as defineUxTextImage } from '@uxshop/storefront-components/dist/components/ux-text-image'
 
 export function UxTextImage({ settings }: UxTextImageProps) {
   const dataProps = {
