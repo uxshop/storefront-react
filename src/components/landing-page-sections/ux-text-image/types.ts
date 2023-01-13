@@ -1,10 +1,10 @@
 export interface UxTextImageSettings {
-  title?: string
-  description?: string
-  image?: string
-  buttonLabel?: string
-  buttonHref?: string
-  position?: 'right' | 'left'
+  dataTitle: string
+  dataDescription: string
+  dataImage: string
+  dataButtonLabel: string
+  dataButtonHref?: string
+  dataPosition?: 'right' | 'left'
 }
 
 export interface UxTextImageProps {
