@@ -4,12 +4,13 @@ import { defineCustomElement as defineUxTextImage } from '@uxshop/storefront-com
 
 export function UxTextImage({ settings }: UxTextImageProps) {
   const dataProps = {
-    'data-title': settings.title,
-    'data-description': settings.description,
-    'data-image': settings.image,
-    'data-button-href': settings.buttonHref,
-    'data-button-label': settings.buttonLabel,
-    'data-position': settings.position
+    'data-image': settings.dataImage,
+    'data-title': settings.dataTitle,
+    'data-subtitle': settings.dataSubtitle,
+    'data-description': settings.dataDescription,
+    'data-button-label': settings.dataButtonLabel,
+    'data-button-href': settings.dataButtonHref,
+    'data-position': settings.dataPosition
   }
 
   defineUxTextImage()
