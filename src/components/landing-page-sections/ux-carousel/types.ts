@@ -2,17 +2,20 @@ export interface UxCarouselSettings {
   dataRewind?: boolean
   dataAutoplay?: boolean
   dataArrows?: boolean
-  dataPagination?: boolean
 }
 
 export interface UxCarouselItemSettings {
   dataButtonLabel: string
   dataButtonHref: string
-  dataTitle?: string
-  dataDescription?: string
-  dataDesktopImage?: string
-  dataMobileImage?: string
-  dataImageAlt?: string
+  dataTitle: string
+  dataDescription: string
+  dataDesktopImage: string
+  dataMobileImage: string
+  dataImageAlt: string
+  dataShouldCenterInfos: boolean
+  dataButtonColor: string
+  dataFontButtonColor: string
+  dataFontColor: string
 }
 
 export interface UxCarouselBLocks {

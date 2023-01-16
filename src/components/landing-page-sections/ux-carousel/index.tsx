@@ -4,10 +4,9 @@ import { UxCarouselProps } from './types'
 
 export function UxCarousel(props: UxCarouselProps) {
   const dataProps = {
-    'data-rewind': props.settings.dataRewind,
-    'data-autoplay': props.settings.dataAutoplay,
-    'data-arrows': props.settings.dataArrows,
-    'data-pagination': props.settings.dataPagination,
+    'data-rewind': Boolean(props.settings.dataRewind),
+    'data-autoplay': Boolean(props.settings.dataAutoplay),
+    'data-arrows': Boolean(props.settings.dataArrows),
     'data-items': JSON.stringify(props.blocks.map(block => block.settings))
   }
 
