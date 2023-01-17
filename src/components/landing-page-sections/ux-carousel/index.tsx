@@ -1,16 +1,16 @@
+import { defineCustomElement as defineUxCarousel } from '@uxshop/storefront-components/dist/components/ux-carousel'
 import React from 'react'
 import { UxCarouselProps } from './types'
-import { defineCustomElement as defineUxCarousel } from '@uxshop/storefront-components/dist/components/ux-carousel'
 
-export function UxCarousel({ settings, children }: UxCarouselProps) {
+export function UxCarousel(props: UxCarouselProps) {
   const dataProps = {
-    'data-arrows': settings.arrows,
-    'data-autoplay': settings.autoplay,
-    'data-pagination': settings.pagination,
-    'data-rewind': settings.rewind
+    'data-rewind': Boolean(props.settings.dataRewind),
+    'data-autoplay': Boolean(props.settings.dataAutoplay),
+    'data-arrows': Boolean(props.settings.dataArrows),
+    'data-items': JSON.stringify(props.blocks.map(block => block.settings))
   }
 
   defineUxCarousel()
 
-  return React.createElement('ux-carousel', dataProps, children)
+  return React.createElement('ux-carousel', dataProps)
 }
