@@ -10,7 +10,7 @@ export interface SectionsPropsType {
 }
 
 export function Sections({ sections, components, page }: SectionsPropsType): JSX.Element {
-  const sectionsData = sections ? sections : useSections({})
+  const sectionsData = sections ? sections : useSections({ page })
 
   return (
     <>
@@ -20,7 +20,7 @@ export function Sections({ sections, components, page }: SectionsPropsType): JSX
             const component = components[schema]
             return (
               <React.Fragment key={id}>
-                {type === (page || 'content') && (
+                {type === page || type === 'content' ? (
                   <SectionLoader
                     id={id}
                     component={component}
@@ -28,7 +28,7 @@ export function Sections({ sections, components, page }: SectionsPropsType): JSX
                     blocks={blocks}
                     disabled={disabled}
                   />
-                )}
+                ) : null}
               </React.Fragment>
             )
           }
