@@ -45,6 +45,6 @@ export function useBlogPosts(
 
   useEffect(() => {
     id || slug ? getOne() : getList()
-  }, [])
+  }, [first, slug, id, postCategoryId])
   return { ...state }
 }

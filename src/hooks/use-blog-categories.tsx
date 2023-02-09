@@ -38,7 +38,7 @@ export function useBlogCategories(
   }
   useEffect(() => {
     getOneFilter?.id || getOneFilter?.slug ? getOne() : getList()
-  }, [])
+  }, [getOneFilter.id, getOneFilter.slug])
 
   return { ...state }
 }
