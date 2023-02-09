@@ -4,23 +4,23 @@ import { SectionLoader } from '../section-loader'
 
 type Obj = Record<string, any>
 export interface SectionsPropsType {
-  components: Obj
+  components?: Obj
   sections?: any
+  page?: string
 }
 
-export function Sections({ sections, components }: SectionsPropsType): JSX.Element {
-  const sectionsData = sections ? sections : useSections({})
+export function Sections({ sections, components, page }: SectionsPropsType): JSX.Element {
+  const sectionsData = sections ? sections : useSections({ page })
 
   return (
     <>
-      {sectionsData?.content &&
-        sectionsData.content.map(
+      {sectionsData?.data?.content &&
+        sectionsData?.data?.content.map(
           ({ id, schema, blocks, settings, type, disabled }): JSX.Element => {
             const component = components[schema]
-
             return (
               <React.Fragment key={id}>
-                {type === 'content' && (
+                {type === page || type === 'content' ? (
                   <SectionLoader
                     id={id}
                     component={component}
@@ -28,7 +28,7 @@ export function Sections({ sections, components }: SectionsPropsType): JSX.Eleme
                     blocks={blocks}
                     disabled={disabled}
                   />
-                )}
+                ) : null}
               </React.Fragment>
             )
           }

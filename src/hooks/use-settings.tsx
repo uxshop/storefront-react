@@ -1,23 +1,37 @@
 import { useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 import { SettingsService, Socket } from '@uxshop/storefront-core'
 import { SettingFilter } from '@uxshop/storefront-core/dist/modules/settings/SettingsTypes'
 
-export function useSettings(filter: SettingFilter): any {
+export function useSettings(filter: SettingFilter): HookData {
+  const themeId = filter.themeId
   const urlParams = new URLSearchParams(window.location.search)
   const hashPreview = urlParams.get('preview')
-  const [settings, setSettings] = useState<any>()
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
+  })
 
   async function getSettings() {
-    const result = await SettingsService.getOne(filter)
+    setState(state => ({ ...state, loading: true }))
 
-    setSettings(result.data)
+    SettingsService.getOne(filter)
+      .then(response => {
+        setState({ ...state, loading: false, data: response })
+      })
+      .catch(error => setState({ ...state, loading: false, error }))
   }
 
   function onUpdate({ data }: any) {
-    if (data) {
-      setSettings(data?.settings)
+    if (data.settings) {
+      setState({ ...state, loading: false, data: data.settings })
     }
   }
+
+  useEffect(() => {
+    getSettings()
+  }, [themeId])
 
   useEffect(() => {
     getSettings()
@@ -26,5 +40,5 @@ export function useSettings(filter: SettingFilter): any {
     }
   }, [])
 
-  return settings
+  return { ...state }
 }

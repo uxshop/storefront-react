@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { HookData } from './types/HookData'
 import { ProductService } from '@uxshop/storefront-core'
 import {
   ProductFields,
@@ -13,33 +14,35 @@ interface ProductHookParams {
   agg?: Aggregator
 }
 
-interface GetOneParams extends Omit<ProductHookParams, 'pagination'> {}
-
 export function useProducts(
   { productId, slug, agg, filter }: ProductHookParams,
-  fields?: Array<ProductFields>
-): any {
-  const [products, setProducts] = useState<any>()
+  fields?: ProductFields[]
+): HookData {
+  const [state, setState] = useState<HookData>({
+    loading: false,
+    data: null,
+    error: null
+  })
 
-  async function getOne({ productId, slug }: GetOneParams, fields?: Array<ProductFields>) {
+  const getOne = useCallback(() => {
+    setState(state => ({ ...state, loading: true }))
     const service = productId ? ProductService.getById : ProductService.getBySlug
     const param = productId ?? slug
-    const result = await service(param, fields)
-    setProducts(result)
-  }
+    service(param, fields)
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
+  }, [productId, slug])
 
-  async function getList(
-    filter?: ProductListFilter,
-    agg?: Aggregator,
-    fields?: Array<ProductFields>
-  ) {
-    const result = await ProductService.getList({ filter, agg, fields })
-    setProducts(result)
-  }
+  const getList = useCallback(() => {
+    setState(state => ({ ...state, loading: true }))
+    ProductService.getList({ filter, agg, fields })
+      .then(response => setState(state => ({ ...state, loading: false, data: response })))
+      .catch(error => setState(state => ({ ...state, loading: false, error })))
+  }, [filter, agg])
 
   useEffect(() => {
-    productId || slug ? getOne({ productId, slug }, fields) : getList(filter, agg, fields)
-  }, [filter])
+    productId || slug ? getOne() : getList()
+  }, [])
 
-  return products
+  return { ...state }
 }
